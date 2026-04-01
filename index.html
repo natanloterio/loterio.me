@@ -1,63 +1,190 @@
 <!doctype html>
-<html lang="pt">
+<html lang="en">
 <head>
-<title>Natan super legal!!!!!</title>
-<style>
-body{background:#07120a;color:#bfffbf;font-family:Arial, sans-serif;margin:0;padding:20px}
-.page{max-width:780px;margin:20px auto;padding:22px;border:2px solid #063;background:rgba(4,20,6,0.6);}
- h1{color:#7fff7f;font-size:48px;margin:6px 0;text-shadow:0 1px 0 #022}
- .meta{color:#99ff99;margin-bottom:10px;font-size:18px}
- .contact strong{color:#aaffaa}
- .badge{display:inline-block;padding:6px 10px;border-radius:6px;background:linear-gradient(#113311,#224422);border:1px solid #2a6f3a;color:#dfffdc;margin-right:6px}
- h2{color:#8fffa0;border-bottom:1px dashed #064;padding-bottom:6px}
- p{color:#cfefd0;font-size:16px}
- a{color:#b7ffb7}
- ul{color:#cfefd0}
- footer{color:#93ff93;text-align:center;margin-top:18px;border-top:1px solid #064;padding-top:10px}
- img{max-width:120px;border:2px solid #0b3}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>natan loterio</title>
+  <meta name="description" content="Natan Loterio — software engineer, co-founder of pitaia.me. Previously Tech Lead at HUGO BOSS.">
+  <meta property="og:title" content="natan loterio">
+  <meta property="og:description" content="Software engineer with 15+ years of experience. Co-founding pitaia.me.">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --primary: #33ff33;
+      --dimmed: #22bb22;
+      --accent: #66ff66;
+      --border: #1a331a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--primary);
+      font-family: 'IBM Plex Mono', 'Courier New', monospace;
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.08) 2px,
+        rgba(0, 0, 0, 0.08) 4px
+      );
+      opacity: 0.5;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    .cursor {
+      animation: blink 1s step-end infinite;
+    }
+
+    header { margin-bottom: 48px; }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      text-shadow: 0 0 8px rgba(51, 255, 51, 0.3);
+    }
+
+    header p {
+      color: var(--dimmed);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    section { margin-bottom: 40px; }
+
+    h2 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
+      text-shadow: 0 0 8px rgba(51, 255, 51, 0.3);
+      margin-bottom: 16px;
+    }
+
+    h2::before {
+      content: '## ';
+      color: var(--dimmed);
+    }
+
+    .about p {
+      color: var(--dimmed);
+      font-size: 14px;
+    }
+
+    .experience .entry {
+      margin-bottom: 16px;
+      padding-left: 16px;
+    }
+
+    .experience .entry::before {
+      content: '> ';
+      color: var(--dimmed);
+      margin-left: -16px;
+    }
+
+    .entry .role {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .entry .period {
+      color: var(--dimmed);
+    }
+
+    .entry .desc {
+      color: var(--dimmed);
+      font-size: 14px;
+    }
+
+    .contact a {
+      color: var(--accent);
+      text-decoration: none;
+      display: block;
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .contact a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--dimmed);
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      body { font-size: 13px; padding: 32px 16px; }
+      header h1 { font-size: 22px; }
+    }
+  </style>
 </head>
 <body>
 
-    <h1 >NATAN LOTERIO 💻</h1>
-    <div class="meta">I build fast and well‑crafted Android apps.</div><img src="https://media.tenor.com/WNMQ9GWpZxkAAAAi/star.gif">
+  <header>
+    <h1>natan loterio<span class="cursor">_</span></h1>
+    <p>Co-founding pitaia.me</p>
+    <p>Previously Tech Lead @ HUGO BOSS</p>
+    <p>Lisbon, Portugal</p>
+  </header>
 
-    <div class="contact">
-      <strong>Contact:</strong>
-      <span class="badge">📧 natanloterio@gmail.com</span>
-      <span class="badge">💼 linkedin.com/in/natanloterio</span>
-      <span class="badge">🌐 natanloterio.github.io</span>
+  <section class="about">
+    <h2>about</h2>
+    <p>Software engineer with 15+ years of experience. Currently building something new at pitaia.me. Background in leading engineering teams and shipping scalable products — from Android apps to e-commerce platforms at HUGO BOSS and FARFETCH.</p>
+  </section>
+
+  <section class="experience">
+    <h2>experience</h2>
+    <div class="entry">
+      <span class="role">Founder — pitaia.me</span> <span class="period">(2026–present)</span><br>
+      <span class="desc">Building something new.</span>
     </div>
-
-    
-
-    <h2>Summary</h2>
-    <p>Software engineer with 8+ years of experience in web and mobile applications, SDK development, and integration with e‑commerce platforms. Experienced in automated testing, CI/CD, and legacy code refactoring.</p>
-
-    <h2>Skills</h2>
-<ul>
-<li><strong>Tech Lead — HUGO BOSS</strong> (2025–Present) — Leading Android architecture modernization, performance improvements, and UI modernization with Compose.</li>
-</ul>
-
-<h2>Work Experience</h2>
-<ul>
-<li><strong>Tech Lead — HUGO BOSS</strong> (2025–Present) — Leading Android architecture modernization and performance improvements in e‑commerce applications.</li>
-<li><strong>Android Engineer — FARFETCH</strong> (2021–2025) — Jetpack Compose adoption, CI/CD pipeline optimization (15m → 2.5m), architecture modernization, dependency injection rollout.</li>
-</ul>
-    
-
-    
-
-    
-
-    <div class="cv">
-      <strong>Resume:</strong>
-      <a href="mailto:natanloterio@gmail.com?subject=Pedido%20de%20CV">Send an email to request my resume</a>
-      <span style="color:#888"> • or</span>
-      <a href="#" onclick="window.print();return false;">Print this page</a>
+    <div class="entry">
+      <span class="role">Tech Lead — HUGO BOSS</span> <span class="period">(2025–2026)</span><br>
+      <span class="desc">Led Android architecture modernization and performance improvements.</span>
     </div>
+    <div class="entry">
+      <span class="role">Android Engineer — FARFETCH</span> <span class="period">(2021–2025)</span><br>
+      <span class="desc">Jetpack Compose adoption, CI/CD pipeline optimization (15min → 2.5min), architecture modernization, dependency injection rollout.</span>
+    </div>
+    <div class="entry">
+      <span class="role">Architecture Analyst — Cecred</span> <span class="period">(2018–2019)</span><br>
+      <span class="desc">Led corporate innovation programs. Drove R$5M in savings.</span>
+    </div>
+  </section>
 
-    <footer>Thanks for visiting!</footer>
-  </div>
+  <section class="contact">
+    <h2>contact</h2>
+    <a href="mailto:natanloterio@gmail.com">natanloterio@gmail.com</a>
+    <a href="https://linkedin.com/in/natanloterio" rel="noopener noreferrer">linkedin.com/in/natanloterio</a>
+    <a href="https://github.com/natanloterio" rel="noopener noreferrer">github.com/natanloterio</a>
+  </section>
+
+  <footer>$ echo "thanks for visiting"</footer>
+
 </body>
 </html>
