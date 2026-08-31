@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FARFETCH — moderniser une application e-commerce · Natan Loterio</title>
+<meta name="description" content="Moderniser l'application Android de FARFETCH en production : adoption incrémentale de Jetpack Compose, injection de dépendances, et un pipeline CI ramené de 15 minutes à 2,5.">
+<meta property="og:title" content="FARFETCH — moderniser une application e-commerce en production">
+<meta property="og:description" content="Adoption incrémentale de Compose et injection de dépendances sur une application e-commerce en production, et un pipeline ramené de 15 minutes à 2,5.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/fr/work/farfetch.html">
+<link rel="canonical" href="https://loterio.me/fr/work/farfetch.html">
+<link rel="alternate" hreflang="en" href="https://loterio.me/work/farfetch.html">
+<link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/farfetch.html">
+<link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/farfetch.html">
+<link rel="alternate" hreflang="x-default" href="https://loterio.me/work/farfetch.html">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+
+<nav class="langs" aria-label="Langue">
+  <a href="../../work/farfetch.html" hreflang="en" lang="en">EN</a>
+  <span aria-current="true">FR</span>
+  <a href="../../lb/work/farfetch.html" hreflang="lb" lang="lb">LB</a>
+</nav>
+
+<nav class="case-nav" aria-label="Retour à l'accueil"><a href="../index.html">&larr; Natan Loterio</a></nav>
+
+<main class="case">
+<h1>FARFETCH — moderniser une application e-commerce en production</h1>
+<p class="meta">Ingénieur Android · août 2021 – avril 2025 · <a href="https://play.google.com/store/apps/details?id=com.farfetch.farfetchshop" rel="noopener noreferrer">FARFETCH sur Google Play</a></p>
+
+<h2>Problème</h2>
+<p>FARFETCH est une marketplace de mode de luxe, et son application Android reçoit des commandes de clients du monde entier. En 2021, la base de code portait des années de décisions accumulées&nbsp;: du MVC dans les écrans les plus anciens, du MVVM dans les plus récents, des dépendances câblées à la main d'un bout à l'autre. Rien de tout cela n'était faux au moment de son écriture, et tout cela rendait le changement suivant plus lent que le précédent.</p>
+<p>Le pipeline d'intégration continue prenait quinze minutes par exécution. Quinze minutes, c'est au-delà du seuil où les ingénieurs cessent de le lancer et se mettent à grouper leurs changements — et c'est ainsi que les problèmes d'intégration se découvrent tard et cher.</p>
+
+<h2>Contrainte</h2>
+<p>Rien ne pouvait s'arrêter. L'application était en production et générait du chiffre d'affaires, sur un train de livraison qui ne s'interrompait pas pour des travaux d'architecture. Chaque changement devait arriver de façon incrémentale, et les anciens comme les nouveaux patterns devaient cohabiter dans la même base de code aussi longtemps que durerait la migration — c'est-à-dire des années, pas des sprints.</p>
+
+<h2>Décisions</h2>
+<ul>
+<li><strong>Jetpack Compose adopté écran par écran, derrière la navigation existante.</strong> Les nouveaux écrans étaient écrits en Compose&nbsp;; les anciens migraient lorsqu'on les ouvrait de toute façon pour d'autres raisons. Pas de sprint de migration, pas de gel des fonctionnalités, pas de branche qui vit six mois.</li>
+<li><strong>Inversion de contrôle via l'injection de dépendances.</strong> C'est le changement qui a rendu tout le reste possible. Séparer la construction du comportement est ce qui a permis à un écran de migrer seul, sans traîner ses dépendances derrière lui.</li>
+<li><strong>La modularisation d'abord, le cache ensuite — dans cet ordre.</strong> C'est le découpage du monolithe en modules Gradle qui a rendu le build cachable tout court. Avec un module unique, presque n'importe quel changement invalide la totalité du build, et un cache n'apporte alors presque rien&nbsp;; une fois les frontières posées, un changement ne touche que quelques modules et le reste est servi depuis le cache.</li>
+<li><strong>Ensuite les deux caches Gradle, contre deux coûts distincts.</strong> Le build cache réutilise les sorties de tâches d'un build à l'autre et d'une machine à l'autre&nbsp;: la CI cesse de recalculer ce qu'une autre exécution a déjà produit. Le configuration cache retire la phase de configuration des exécutions suivantes — le prix fixe que payait auparavant chaque build, même lorsque presque rien n'avait changé.</li>
+</ul>
+
+<h2>Résultat</h2>
+<p>Le temps de build du pipeline est passé de 15 minutes à 2,5 minutes en moyenne — de nouveau sous le seuil où les ingénieurs le lancent à chaque changement au lieu de les grouper.</p>
+<p>Compose et l'injection de dépendances sont devenus la norme pour tout nouveau développement, et non des expérimentations menées en parallèle. C'est le seul résultat durable qu'une migration incrémentale puisse produire&nbsp;: la nouvelle manière de faire doit être la plus facile, sinon l'ancienne l'emporte par inertie.</p>
+
+<h2>Ce que je ferais autrement</h2>
+<p>Je modulariserais avant de migrer, et non en même temps. Nous avons mené les deux de front, alors que l'argument que j'avance pour le build cache vaut aussi pour la migration&nbsp;: ce sont les frontières entre modules qui rendent un changement incrémental peu coûteux. Sans elles, chaque écran passé à Compose traînait encore tout le graphe de dépendances derrière lui, et la migration a payé un surcoût qui aurait pu être évité. Le travail sur le pipeline l'a démontré — je l'ai simplement démontré dans le mauvais ordre.</p>
+</main>
+
+<footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
+
+</body>
+</html>

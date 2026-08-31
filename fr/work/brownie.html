@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brownie — l'IA embarquée sur Android · Natan Loterio</title>
+<meta name="description" content="Construire un agent IA capable d'appeler des outils et tournant entièrement sur un téléphone Android : Gemma 4 E2B via LiteRT-LM, quantification choisie selon la RAM de l'appareil, cinq modules Gradle, sans cloud.">
+<meta property="og:title" content="Brownie — l'IA embarquée sur Android">
+<meta property="og:description" content="Un agent capable d'appeler des outils, dans le budget mémoire d'un téléphone. Sans cloud, sans clé d'API, sans aucune donnée qui quitte l'appareil.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/fr/work/brownie.html">
+<link rel="canonical" href="https://loterio.me/fr/work/brownie.html">
+<link rel="alternate" hreflang="en" href="https://loterio.me/work/brownie.html">
+<link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/brownie.html">
+<link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/brownie.html">
+<link rel="alternate" hreflang="x-default" href="https://loterio.me/work/brownie.html">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+
+<nav class="langs" aria-label="Langue">
+  <a href="../../work/brownie.html" hreflang="en" lang="en">EN</a>
+  <span aria-current="true">FR</span>
+  <a href="../../lb/work/brownie.html" hreflang="lb" lang="lb">LB</a>
+</nav>
+
+<nav class="case-nav" aria-label="Retour à l'accueil"><a href="../index.html">&larr; Natan Loterio</a></nav>
+
+<main class="case">
+<h1>Brownie — l'IA embarquée sur Android</h1>
+<p class="meta">Projet personnel · Kotlin, Jetpack Compose, LiteRT-LM · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">code source sur GitHub</a></p>
+
+<h2>Problème</h2>
+<p>Tout assistant IA réellement capable sur un téléphone est un client léger. Le modèle réside dans le datacenter d'un tiers, la conversation fait l'aller-retour, et l'ensemble cesse de fonctionner dans un avion ou derrière le pare-feu d'une entreprise. La confidentialité y est une promesse inscrite dans une politique, non une propriété du système.</p>
+<p>Je voulais savoir ce qu'il restait vraiment si l'on refusait tout cela — non pas une démonstration de chatbot, mais un véritable agent qui appelle des outils, lit et écrit des fichiers, se souvient d'une session à l'autre et pilote l'appareil, en tournant entièrement sur le matériel que l'on a dans la poche.</p>
+
+<h2>Contrainte</h2>
+<p>Un téléphone n'est pas un serveur. Il n'y a pas de swap digne de ce nom, le budget mémoire est partagé avec toutes les autres applications en cours d'exécution, et une inférence soutenue se heurte directement à la limitation thermique. Les poids du modèle, la couche d'outils, l'historique de conversation et l'interface doivent tenir dans ce qu'un appareil Android de milieu de gamme peut céder — et l'interface doit rester réactive pendant que le modèle travaille.</p>
+<p>La seconde contrainte était volontaire, et plus difficile&nbsp;: aucun recours au cloud. Une conception hybride qui appellerait discrètement un modèle distant dès que l'appareil peine aurait rendu chaque démonstration plus fluide et détruit la raison même de ce projet.</p>
+
+<h2>Décisions</h2>
+<ul>
+<li><strong>Quantification choisie à l'exécution, et non à la compilation.</strong> L'application détecte la RAM disponible au premier lancement et choisit un palier&nbsp;: Q4 à environ 1,5&nbsp;GB pour les appareils de 6 à 8&nbsp;GB, Q4 plus un projecteur de vision pour 8 à 12&nbsp;GB, Q8 avec vision au-delà. En dessous de 6&nbsp;GB, l'application annonce qu'elle ne fonctionnera pas, plutôt que d'échouer lentement en rejetant la faute sur l'utilisateur.</li>
+<li><strong>Cinq modules Gradle plutôt qu'un seul.</strong> <code>:core:inference</code> encapsule LiteRT-LM, le téléchargement du modèle et la détection de l'appareil&nbsp;; <code>:core:agent</code> porte la boucle&nbsp;; <code>:core:tools</code> le registre et ses douze implémentations&nbsp;; <code>:core:memory</code> la persistance, le profil et la recherche plein texte dans les sessions&nbsp;; <code>:app</code> l'interface Compose. La frontière qui a justifié son coût est l'inférence — c'est la pièce dont le remplacement est le plus certain à l'arrivée du prochain modèle embarqué.</li>
+<li><strong>Compression du contexte plutôt que troncature.</strong> Quand la fenêtre se remplit, l'agent résume et poursuit. La troncature aurait représenté une journée de travail&nbsp;; perdre la première moitié d'une conversation est précisément le type de défaillance que les utilisateurs ne savent pas diagnostiquer.</li>
+<li><strong>Un client MCP.</strong> De nouveaux outils s'ajoutent en pointant l'application vers un serveur, sans publier d'APK.</li>
+</ul>
+
+<h2>Résultat</h2>
+<p>120 fichiers Kotlin répartis sur cinq modules, 200 commits. Appels d'outils sur plusieurs tours, jusqu'à dix itérations par message, réponses en streaming avec des étiquettes d'appel d'outil dans l'interface, outils de fichiers dans un espace de travail cloisonné, contacts, agenda, presse-papiers, tâches autonomes planifiées, lecture de l'écran et automatisation de l'appareil via les API d'accessibilité, extraction web via une WebView, et la parole dans les deux sens.</p>
+<p>Sans cloud, sans clé d'API, sans aucune donnée qui quitte le téléphone. Après le téléchargement du modèle, effectué une seule fois, le moteur se charge en cinq à quinze secondes et l'application fonctionne réseau coupé.</p>
+
+<h2>Ce que je ferais autrement</h2>
+<p>La couche d'outils a fini par dépasser l'application. <code>:core:tools</code> est devenu plus gros que le module d'interface — quarante-quatre fichiers contre quarante et un — parce que chaque nouvelle capacité signifiait une implémentation de plus compilée dans le binaire. Le client MCP ajouté en v6 est la bonne forme, et c'est par là que je commencerais&nbsp;: un jeu intégré réduit pour ce qui a réellement besoin d'un accès au processus, et tout le reste derrière un serveur d'outils modifiable sans publier d'APK. Je suis arrivé tard à cette frontière&nbsp;; elle aurait dû être la première.</p>
+</main>
+
+<footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
+
+</body>
+</html>

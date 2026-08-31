@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natan Loterio — Ingénieur Android Senior / Staff</title>
+<meta name="description" content="Ingénieur Android Senior / Staff, 15 ans dans le logiciel dont 13 sur Android. Kotlin, Compose, IA embarquée. Ancien Tech Lead chez HUGO BOSS et ingénieur Android chez FARFETCH. Disponible pour une relocalisation dans l'UE et au Royaume-Uni.">
+<meta property="og:title" content="Natan Loterio — Ingénieur Android Senior / Staff">
+<meta property="og:description" content="Quinze ans de métier, dont l'essentiel sur Android. Je reprends des systèmes façonnés par les contraintes d'un tiers et j'en redonne la maîtrise à l'équipe.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/fr/">
+<meta property="og:type" content="profile">
+<link rel="canonical" href="https://loterio.me/fr/">
+<link rel="alternate" hreflang="en" href="https://loterio.me/">
+<link rel="alternate" hreflang="fr" href="https://loterio.me/fr/">
+<link rel="alternate" hreflang="lb" href="https://loterio.me/lb/">
+<link rel="alternate" hreflang="x-default" href="https://loterio.me/">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Natan Loterio","jobTitle":"Ingénieur Android Senior / Staff","email":"mailto:natanloterio@gmail.com","url":"https://loterio.me/","image":"https://loterio.me/assets/natan.jpg","address":{"@type":"PostalAddress","addressLocality":"Lisbon","addressCountry":"PT"},"alumniOf":{"@type":"CollegeOrUniversity","name":"FURB — Universidade de Blumenau"},"knowsAbout":["Android","Kotlin","Jetpack Compose","On-device machine learning","Mobile architecture"],"sameAs":["https://github.com/natanloterio","https://www.linkedin.com/in/natanloterio","https://natanloterio.substack.com"]}
+</script>
+</head>
+<body>
+
+<nav class="langs" aria-label="Langue">
+  <a href="../" hreflang="en" lang="en">EN</a>
+  <span aria-current="true">FR</span>
+  <a href="../lb/" hreflang="lb" lang="lb">LB</a>
+</nav>
+
+<header class="hero">
+  <img class="portrait" src="../assets/natan.jpg" width="96" height="96" alt="Portrait de Natan Loterio">
+  <div>
+    <h1>Natan Loterio</h1>
+    <p class="role">Ingénieur Android Senior / Staff · Kotlin, Compose, IA embarquée · 15&nbsp;ans</p>
+    <p class="status">Disponible immédiatement. Ouvert à une relocalisation dans l'Union européenne et au Royaume-Uni, avec une demande de recouvrement de la nationalité luxembourgeoise déposée et en cours d'examen.</p>
+    <nav class="actions" aria-label="Liens de profil">
+      <a class="btn primary" href="../assets/cv-en.pdf">CV (EN)</a>
+      <a class="btn" href="../assets/cv-fr.pdf">CV (FR)</a>
+      <a class="btn" href="https://github.com/natanloterio" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/natanloterio" rel="noopener noreferrer">LinkedIn</a>
+      <a class="btn" href="mailto:natanloterio@gmail.com">E-mail</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<section id="thesis">
+  <h2>Ce que je fais</h2>
+  <p>Je reprends des systèmes façonnés par les contraintes d'un tiers et j'en redonne la maîtrise à l'équipe. Une application Android détenue par une agence externe, internalisée avec une équipe constituée autour d'elle. Un pipeline de quinze minutes ramené à deux minutes et demie. Un modèle de langage qui ne tournait que dans le cloud d'un tiers, et qui tourne désormais entièrement sur le téléphone.</p>
+  <p>Le travail a presque toujours la même forme&nbsp;: trouver ce que l'équipe ne maîtrise pas réellement, et le changer. Quinze ans de métier, dont l'essentiel sur Android.</p>
+</section>
+
+<section id="proof">
+  <h2>Sélection de travaux</h2>
+
+  <article class="proof-item">
+    <h3>Brownie — assistant IA embarqué pour Android</h3>
+    <p class="meta">Kotlin · Jetpack Compose · LiteRT-LM · open source</p>
+    <dl>
+      <dt>Contrainte</dt>
+      <dd>Un agent capable d'appeler des outils, dans le budget mémoire d'un téléphone, sans cloud ni clé d'API.</dd>
+      <dt>Décision</dt>
+      <dd>Gemma 4 E2B via LiteRT-LM, avec une quantification choisie à l'exécution en fonction de la RAM de l'appareil, le tout réparti sur cinq modules Gradle pour que la couche d'inférence puisse être remplacée à l'arrivée du prochain modèle embarqué.</dd>
+      <dt>Résultat</dt>
+      <dd>120 fichiers Kotlin répartis sur cinq modules, appels d'outils sur plusieurs tours, mémoire persistante, client MCP. Rien ne quitte l'appareil.</dd>
+    </dl>
+    <p><a href="work/brownie.html">Lire l'étude de cas Brownie</a> · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">Code source</a></p>
+  </article>
+
+  <article class="proof-item">
+    <h3>HUGO BOSS — Tech Lead, applications Android globales</h3>
+    <p class="meta">2025–2026 · BOSS et HUGO · 15 pays, 8 langues</p>
+    <dl>
+      <dt>Contrainte</dt>
+      <dd>Reprendre à une agence externe une application de commerce en production, sans interrompre les livraisons sur quinze marchés.</dd>
+      <dt>Décision</dt>
+      <dd>Internaliser la base de code telle quelle, constituer l'équipe Android interne à partir de zéro et mettre les conventions par écrit, pour qu'une nouvelle équipe puisse avancer sans un ingénieur senior dans chaque conversation.</dd>
+      <dt>Résultat</dt>
+      <dd>Développement internalisé&nbsp;; les conventions définies pour Android ont ensuite été adoptées dans toute l'organisation mobile.</dd>
+    </dl>
+    <p><a href="work/hugo-boss.html">Lire l'étude de cas HUGO BOSS</a> · <a href="https://play.google.com/store/apps/details?id=com.hugoboss.hugoboss" rel="noopener noreferrer">Application</a></p>
+  </article>
+
+  <article class="proof-item">
+    <h3>FARFETCH — Ingénieur Android</h3>
+    <p class="meta">2021–2025 · marketplace de mode de luxe</p>
+    <dl>
+      <dt>Contrainte</dt>
+      <dd>Moderniser de façon incrémentale une application e-commerce en production, avec les anciens et les nouveaux patterns coexistant dans la même base de code.</dd>
+      <dt>Décision</dt>
+      <dd>Adoption de Jetpack Compose écran par écran derrière la navigation existante, inversion de contrôle via l'injection de dépendances, et modularisation du build pour que le build cache et le configuration cache de Gradle transforment la plupart des exécutions CI en builds partiels.</dd>
+      <dt>Résultat</dt>
+      <dd>Pipeline de 15 minutes à 2,5 minutes. Compose et l'injection de dépendances sont devenus la norme pour tout nouveau développement.</dd>
+    </dl>
+    <p><a href="work/farfetch.html">Lire l'étude de cas FARFETCH</a> · <a href="https://play.google.com/store/apps/details?id=com.farfetch.farfetchshop" rel="noopener noreferrer">Application</a></p>
+  </article>
+
+  <article class="proof-item">
+    <h3>Pitaia — CTO</h3>
+    <p class="meta">2026–aujourd'hui · commerce AI-native</p>
+    <dl>
+      <dt>Contrainte</dt>
+      <dd>Construire une plateforme de commerce où le produit est un agent autonome, et non un tableau de bord.</dd>
+      <dt>Décision</dt>
+      <dd>Une couche MCP de 26 outils exposant l'ensemble du produit aux modèles de langage, pour que la plateforme soit entièrement pilotable par un agent.</dd>
+      <dt>Résultat</dt>
+      <dd>D'un dépôt vide à des boutiques en ligne opérationnelles avec des clients payants en moins de six mois, dont le lancement du premier agent de DM Instagram du marché brésilien des créateurs capable de finaliser le paiement — de la conversation au règlement par Pix ou en plusieurs fois — sans que le client quitte la messagerie.</dd>
+    </dl>
+    <p><a href="https://pitaia.me" rel="noopener noreferrer">pitaia.me</a></p>
+  </article>
+</section>
+
+<section id="open-source">
+  <h2>Développé en public</h2>
+  <ul class="repo-list">
+    <li><a href="https://github.com/natanloterio/LiveFolders" rel="noopener noreferrer">LiveFolders</a> — une alternative à MCP fondée sur un système de fichiers virtuel&nbsp;: les outils atteignent les modèles de langage par des entrées/sorties fichier.<span class="stack">Rust</span></li>
+    <li><a href="https://github.com/natanloterio/scene-memory" rel="noopener noreferrer">scene-memory</a> — mémoire à emplacements versionnés pour agents conversationnels&nbsp;; score de 477/500 sur LongMemEval.<span class="stack">Python</span></li>
+    <li><a href="https://github.com/natanloterio/agent-team" rel="noopener noreferrer">agent-team</a> — un plugin qui répartit le travail entre des agents de code parallèles et relit leurs pull requests.<span class="stack">JavaScript</span></li>
+    <li><a href="https://github.com/natanloterio/claude-code-employee-grade-skills" rel="noopener noreferrer">claude-code-employee-grade-skills</a> — des skills extraits de Claude Code.</li>
+    <li><a href="https://github.com/natanloterio/ArchitectTools" rel="noopener noreferrer">ArchitectTools</a> — plugin IntelliJ pour le travail d'architecture.<span class="stack">Kotlin</span></li>
+  </ul>
+</section>
+
+<section id="writing">
+  <h2>Articles</h2>
+  <ul class="plain">
+    <li>
+      <a href="https://natanloterio.substack.com/p/why-we-stopped-fighting-our-tools" rel="noopener noreferrer">Pourquoi nous avons cessé de lutter contre nos outils</a>
+      <span class="period">juin 2026</span>
+      <p>Sur l'adoption d'un outil qui s'adapte à la façon dont une équipe travaille déjà, plutôt que l'inverse.</p>
+    </li>
+  </ul>
+</section>
+
+<section id="track-record">
+  <h2>Parcours</h2>
+  <ul class="timeline">
+    <li><span class="period">2026–aujourd'hui</span><span>CTO — Pitaia, Lisbonne</span></li>
+    <li><span class="period">2025–2026</span><span>Tech Lead, applications Android globales — HUGO BOSS, Lisbonne</span></li>
+    <li><span class="period">2022–2026</span><span>Ingénieur LLM — GaiaHub, Lisbonne <span class="period">(en parallèle de FARFETCH)</span></span></li>
+    <li><span class="period">2021–2025</span><span>Ingénieur Android — FARFETCH, Lisbonne</span></li>
+    <li><span class="period">2020–2021</span><span>Développeur Android — Brelo, Florianópolis</span></li>
+    <li><span class="period">2019–2020</span><span>Développeur Android — Facio, São Paulo</span></li>
+    <li><span class="period">2018–2019</span><span>Analyste architecture — Cecred, Blumenau · contribution à une économie allant jusqu'à 5 millions de réais brésiliens</span></li>
+    <li><span class="period">2017–2018</span><span>Développeur Android Senior — HBSIS, Blumenau</span></li>
+    <li><span class="period">2014–2016</span><span>Développeur Android Senior — ATAR et Morphy Digital Group</span></li>
+    <li><span class="period">2012–2014</span><span>Développeur Android — Microton Tecnologia, Blumenau</span></li>
+    <li><span class="period">2008–2011</span><span>Développement Delphi et ERP</span></li>
+  </ul>
+  <p class="meta">Licence en informatique, FURB — Universidade de Blumenau.</p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <ul class="plain">
+    <li><a href="mailto:natanloterio@gmail.com">natanloterio@gmail.com</a></li>
+    <li><a href="https://www.linkedin.com/in/natanloterio" rel="noopener noreferrer">linkedin.com/in/natanloterio</a></li>
+    <li><a href="https://github.com/natanloterio" rel="noopener noreferrer">github.com/natanloterio</a></li>
+    <li><a href="../assets/cv-en.pdf">Télécharger le CV — anglais (PDF)</a></li>
+    <li><a href="../assets/cv-fr.pdf">Télécharger le CV — français (PDF)</a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>Lisbonne, Portugal · Disponible pour une relocalisation dans l'UE et au Royaume-Uni</footer>
+
+</body>
+</html>
