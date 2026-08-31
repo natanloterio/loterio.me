@@ -51,9 +51,9 @@ judgement, and an interviewer will find the seam.
 
 | # | Input | Needed by |
 |---|---|---|
-| A1 | "What I'd do differently" — one paragraph per case study, three total | Tasks 3, 4, 5 |
+| A1 | ~~"What I'd do differently" — one paragraph per case study~~ — **received**, verbatim text in "Author inputs received" below | resolved |
 | A2 | ~~How the FARFETCH pipeline went from 15 min to 2.5~~ — **answered**: modularization, then Gradle's build cache and configuration cache | resolved |
-| A3 | Written permission to publish the HUGO BOSS figures | Task 5 |
+| A3 | ~~Permission to publish the HUGO BOSS figures~~ — **granted**; publish all of them | resolved |
 | A4 | Whether to state EU citizenship or UK work authorization in the hero | Task 2 |
 | A5 | ~~Confirmation that the thesis is true to how he sees his work~~ — **confirmed by Natan**; ship the drafted wording | resolved |
 
@@ -77,6 +77,36 @@ nothing to a visitor who views source. When Natan supplies the paragraph, it
 drops in under the heading and the criterion goes green.
 
 If A3 is unanswered, Task 5 does not start.
+
+## Author inputs received
+
+The three "What I'd do differently" paragraphs, approved by Natan on 2026-08-31.
+Use these **verbatim**. Each is grounded in observable evidence — Brownie's from
+the repository's own module sizes, FARFETCH's from Natan's account of the work
+order, HUGO BOSS's from the sequence recorded in his CV — and he has read and
+approved all three. Do not reword them.
+
+**`work/brownie.html`:**
+
+```html
+<p>The tool layer outgrew the app. <code>:core:tools</code> ended up larger than the UI module — forty-four files against forty-one — because every new capability meant another implementation compiled into the binary. The MCP client I added in v6 is the right shape, and I would start there: a thin built-in set for the things that genuinely need process access, and everything else behind a tool server that can change without shipping an APK. I reached that boundary late; it should have been the first one.</p>
+```
+
+**`work/farfetch.html`:**
+
+```html
+<p>I would modularize before migrating, not alongside it. We did both at once, and the same argument I make for the build cache applies to the migration: module boundaries are what make an incremental change cheap. Without them, every screen moved to Compose still dragged the whole dependency graph behind it, and the migration paid a tax it did not need to pay. The pipeline work proved the point — I just proved it in the wrong order.</p>
+```
+
+**`work/hugo-boss.html`:**
+
+```html
+<p>I would write the conventions before the handover, not after it. We took ownership of the codebase first and documented the way of working while the team was still forming, which meant the earliest hires were deciding things before there was anything written down to decide against. Those conventions ended up being what management adopted across the whole mobile organization — they were worth more than their place in the sequence suggested, and they should have been the first artefact of the insourcing rather than a product of it.</p>
+```
+
+Each goes directly under its page's existing `<h2>What I'd do differently</h2>`.
+Adding them takes the checker's `every case study answers "what I'd do
+differently"` criterion green and lifts the publication gate.
 
 ---
 
@@ -960,11 +990,11 @@ git commit -m "feat: add FARFETCH case study"
 
 ### Task 5: HUGO BOSS case study
 
-**Blocked on A3.** Do not start this task until Natan has confirmed the
-figures may be published. The numbers appear on his public LinkedIn profile,
-which is a strong argument that republishing them creates no new exposure —
-but that is reasoning, not permission, and he is the one carrying the
-consequence.
+**A3 granted.** Natan approved publishing the HUGO BOSS figures on 2026-08-31:
+fifteen countries, eight languages, 500k+ installs, the 4.5-star rating, and the
+insourcing from an external agency. Installs and rating are in any case visible
+on the app's public Play Store listing right now; the rest already appears on his
+public LinkedIn profile.
 
 **Files:**
 - Create: `work/hugo-boss.html`
@@ -973,14 +1003,10 @@ consequence.
 - Consumes: the template established by `work/brownie.html` in Task 3.
 - Produces: nothing later tasks depend on.
 
-- [ ] **Step 1: Confirm A3, then ask for A1**
+- [ ] **Step 1: Nothing to confirm — proceed**
 
-Confirm publication permission for: fifteen countries, eight languages,
-500k+ installs, 4.5-star rating, and the fact that development was insourced
-from an external agency. If any single figure is withheld, drop that figure
-and keep the rest — the narrative survives without any one number.
-
-Then ask A1: what would he do differently about the insourcing?
+A3 is granted and A1 is received. Publish every figure, and use the
+HUGO BOSS paragraph from "Author inputs received" verbatim.
 
 - [ ] **Step 2: Write work/hugo-boss.html**
 
