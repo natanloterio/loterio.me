@@ -1454,3 +1454,202 @@ clean.
 git add index.html
 git commit -m "feat: state the Luxembourgish nationality application in the hero"
 ```
+
+
+---
+
+## Multilingual extension (Tasks 10-12)
+
+Natan asked for French and Luxembourgish versions with a language switcher in
+the header. I advised against Luxembourgish and he reaffirmed the request, so
+it is being built.
+
+**Recorded caveat, to be surfaced again before any deploy:** the Luxembourgish
+pages are machine-authored by a model that cannot guarantee correctness in a
+low-resource language. They must be read by a native speaker before they go
+live. A flawed page in a language the site's owner does not speak reads as
+pretence to precisely the audience that would open it. This is not a reason
+to skip the work — it is a release gate.
+
+**Scale:** 2,255 words per language, 4,510 to translate, 12 pages total.
+
+**Structure:**
+
+```
+index.html          work/*.html          English   (canonical)
+fr/index.html       fr/work/*.html       French
+lb/index.html       lb/work/*.html       Luxembourgish
+```
+
+Language directories mirror the English tree exactly — same filenames, same
+structure — so every page has a direct counterpart at a predictable path and
+the switcher can be a static link on every page.
+
+### Task 10: Language infrastructure
+
+**Files:** `index.html`, `work/*.html`, `assets/site.css`, `tools/check.mjs`,
+`sitemap.xml`
+
+- [ ] **Step 1: Add the switcher to the four English pages**
+
+On the home page, directly above `<header class="hero">`:
+
+```html
+<nav class="langs" aria-label="Language">
+  <span aria-current="true">EN</span>
+  <a href="fr/" hreflang="fr" lang="fr">FR</a>
+  <a href="lb/" hreflang="lb" lang="lb">LB</a>
+</nav>
+```
+
+On each case page, above `<nav class="case-nav">`, with `../` prefixes
+resolving to the sibling language tree — e.g. on `work/brownie.html`:
+
+```html
+<nav class="langs" aria-label="Language">
+  <span aria-current="true">EN</span>
+  <a href="../fr/work/brownie.html" hreflang="fr" lang="fr">FR</a>
+  <a href="../lb/work/brownie.html" hreflang="lb" lang="lb">LB</a>
+</nav>
+```
+
+The current language is a `<span>`, not a link to itself. `lang` on each link
+tells a screen reader to pronounce "FR" and "LB" in the right voice.
+
+- [ ] **Step 2: Add `hreflang` alternates to every English page `<head>`**
+
+On `index.html`:
+
+```html
+<link rel="alternate" hreflang="en" href="https://loterio.me/">
+<link rel="alternate" hreflang="fr" href="https://loterio.me/fr/">
+<link rel="alternate" hreflang="lb" href="https://loterio.me/lb/">
+<link rel="alternate" hreflang="x-default" href="https://loterio.me/">
+```
+
+Each case page gets the same four lines with its own path. `x-default` always
+points at the English version — it is the canonical one and the language a
+recruiter outside Luxembourg will expect.
+
+- [ ] **Step 3: Style the switcher**
+
+Append to `assets/site.css`:
+
+```css
+.langs {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--s6);
+  display: flex;
+  gap: var(--s3);
+}
+.langs span { color: var(--text); }
+.langs a { color: var(--muted); text-decoration: none; }
+.langs a:hover { color: var(--accent); text-decoration: underline; }
+```
+
+Small and quiet. It is navigation, not a call to action — the CV buttons are
+the call to action and the switcher must not compete with them. Confirm the
+mobile fold still holds afterwards; this adds a row above the hero.
+
+- [ ] **Step 4: Make the checker language-aware**
+
+`tools/check.mjs` currently hard-codes four pages and tests the home page's
+availability line by searching for the English words "Available" and
+"relocation". Both must change.
+
+Replace the `PAGES`/`CASES` constants with:
+
+```js
+const LANGS = ['', 'fr/', 'lb/'];
+const PAGES = LANGS.flatMap(d => [`${d}index.html`,
+  `${d}work/brownie.html`, `${d}work/farfetch.html`, `${d}work/hugo-boss.html`]);
+const CASES = PAGES.filter(p => p.includes('work/'));
+const HOMES = PAGES.filter(p => p.endsWith('index.html'));
+```
+
+Replace the `home page states availability and relocation` criterion with a
+**structural** test rather than a lexical one — encoding French and
+Luxembourgish vocabulary into the test suite would make the test wrong in a
+way only a native speaker could see:
+
+```js
+check('every home page carries a substantive status line', () => {
+  const bad = [];
+  for (const page of HOMES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const m = html.match(/<p class="status">([\s\S]*?)<\/p>/);
+    if (!m) { bad.push(`${page}: no status line`); continue; }
+    const n = words(textOf(m[1]));
+    if (n < 10) bad.push(`${page}: status line only ${n} words`);
+  }
+  return bad.length === 0 || bad.join('; ');
+});
+```
+
+Update `CV link precedes the first case-study link on the home page` to run
+over every home page rather than only `index.html`.
+
+Update the case-study word band: French and Luxembourgish run roughly 15-20%
+longer than English for the same content, and `work/brownie.html` is already
+574 words. A flat 400-700 ceiling would fail a correct translation. Use
+400-700 for English and 400-820 for the other two:
+
+```js
+const band = page.startsWith('fr/') || page.startsWith('lb/') ? [400, 820] : [400, 700];
+```
+
+Apply every checker change identically to this plan's copy of the script.
+
+- [ ] **Step 5: Extend `sitemap.xml` to all twelve URLs**
+
+English pages keep priority 1.0 and 0.8; the translations take 0.7 and 0.6,
+signalling English as canonical.
+
+- [ ] **Step 6: Verify**
+
+`node tools/check.mjs` will now report the eight missing translated pages as
+failures. **That is the correct state at the end of Task 10** — the same
+red-before-green pattern the checker was built for. Confirm the failures name
+exactly the eight not-yet-written files and nothing else. `npx -y html-validate
+index.html work/*.html` must stay clean, and the mobile fold must still hold.
+
+### Task 11: French translation
+
+Create `fr/index.html` and `fr/work/{brownie,farfetch,hugo-boss}.html` by
+translating the English pages.
+
+- `<html lang="fr">`, `hreflang` alternates with `fr` marked current, and the
+  switcher showing FR as the `<span>`.
+- `og:url` and `canonical` point at each page's own `/fr/` URL.
+- Stylesheet paths: `../assets/site.css` from `fr/index.html`,
+  `../../assets/site.css` from `fr/work/*.html`. Same for the favicon.
+- **Numbers, company names, module names, technology names and code
+  identifiers are never translated.** `:core:tools` stays `:core:tools`.
+- Natan already has a professional French CV; its wording is the reference for
+  how he describes his own roles in French. Read
+  `assets/cv-fr.pdf` and match its vocabulary for job titles and result
+  statements rather than inventing new phrasing.
+- The `<p class="status">` line must state the same three facts as the English
+  one: available now, open to relocation across the EU and UK, Luxembourgish
+  nationality application filed and under review. **Do not strengthen the
+  nationality claim in translation** — "déposée et en cours d'examen", never
+  anything implying it is granted.
+
+### Task 12: Luxembourgish translation
+
+Same structure under `lb/`, `<html lang="lb">`.
+
+**This task ships marked as unreviewed.** Add an HTML comment at the top of
+each Luxembourgish page — the one place a comment is appropriate, because it
+warns a maintainer rather than addressing a visitor:
+
+```html
+<!-- Machine-authored Luxembourgish. Not yet reviewed by a native speaker. -->
+```
+
+That comment is removed only when a native speaker has read the page. Until
+then these pages must not be linked from anywhere except the switcher, and the
+switcher must not be the reason they get deployed.
