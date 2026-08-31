@@ -245,7 +245,7 @@ check('no inline styles', () => {
 
 check('CV link precedes the first case-study link on the home page', () => {
   const html = read('index.html'); if (!html) return 'index.html missing';
-  const cv = html.indexOf('assets/cv.pdf');
+  const cv = html.indexOf('assets/cv-en.pdf');
   const work = html.indexOf('work/');
   if (cv === -1) return 'no CV link';
   if (work === -1) return 'no case-study link';
@@ -338,7 +338,7 @@ check('every page under 50KB', () => {
 });
 
 check('CV, OG image, sitemap and robots.txt exist', () => {
-  const missing = ['assets/cv.pdf', 'assets/og.png', 'sitemap.xml', 'robots.txt'].filter(f => !existsSync(f));
+  const missing = ['assets/cv-en.pdf', 'assets/cv-fr.pdf', 'assets/og.png', 'sitemap.xml', 'robots.txt'].filter(f => !existsSync(f));
   return missing.length === 0 || `missing: ${missing.join(', ')}`;
 });
 
