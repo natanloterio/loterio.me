@@ -1280,3 +1280,100 @@ affects the work above:
   disk. Safe to delete.
 - `origin` carries 21 stale `dependabot/npm_and_yarn/*` branches for those
   dependencies. Deleting remote branches is Natan's call, not the plan's.
+
+
+---
+
+### Task 8: Purpose-built CVs in English and French
+
+Natan supplied two hand-built CVs, in English and French, to replace the
+LinkedIn profile export shipped in Task 6. Both were read in full before
+being accepted: 4 pages each, A4, same content faithfully translated, and
+every figure consistent with what the site already claims (15 countries,
+500,000+ installs, 4.5 stars, 15→2.5 minutes, R$5M, the 26-tool MCP layer,
+blank repo to paying customers in under six months). Nothing in either
+contradicts a page on this site.
+
+**Files:**
+- Create: `assets/cv-en.pdf`, `assets/cv-fr.pdf`
+- Delete: `assets/cv.pdf` (the superseded LinkedIn export)
+- Modify: `index.html` (hero actions and contact list)
+- Modify: `tools/check.mjs` (asset list)
+
+- [ ] **Step 1: Copy the two CVs in and remove the export**
+
+```bash
+cp "/home/loterio/.claude/uploads/0d455125-7619-463b-b7ea-50f21dfb6f07/4e0dc582-CV__Natan_Loterio_Roden__EN.pdf" assets/cv-en.pdf
+cp "/home/loterio/.claude/uploads/0d455125-7619-463b-b7ea-50f21dfb6f07/d6f379aa-CV__Natan_Loterio_Roden__FR.pdf" assets/cv-fr.pdf
+git rm assets/cv.pdf
+```
+
+Confirm each with `pdfinfo`: 4 pages, A4. The old export stays recoverable in
+git history.
+
+- [ ] **Step 2: Update the hero actions in `index.html`**
+
+Replace the single CV button with two, keeping the rest of the nav unchanged:
+
+```html
+    <a class="btn primary" href="assets/cv-en.pdf">CV (EN)</a>
+    <a class="btn" href="assets/cv-fr.pdf">CV (FR)</a>
+```
+
+The English CV keeps the `primary` class — it is the default for the target
+market. The French one is a plain button.
+
+- [ ] **Step 3: Update the contact list in `index.html`**
+
+Replace the single `Download CV (PDF)` item with two:
+
+```html
+    <li><a href="assets/cv-en.pdf">Download CV — English (PDF)</a></li>
+    <li><a href="assets/cv-fr.pdf">Télécharger le CV — Français (PDF)</a></li>
+```
+
+The French link is labelled in French on purpose: a reader who wants that
+file reads that language, and the label is the fastest signal that the file
+is genuinely in French rather than a machine translation of the title.
+
+- [ ] **Step 4: Update the checker's asset list**
+
+In `tools/check.mjs`, in the `CV, OG image, sitemap and robots.txt exist`
+criterion, replace `'assets/cv.pdf'` with `'assets/cv-en.pdf', 'assets/cv-fr.pdf'`.
+Apply the identical change to this plan's copy of the checker so the two do
+not drift.
+
+Also update the `CV link precedes the first case-study link on the home page`
+criterion: it searches for `'assets/cv.pdf'`, which no longer exists. Change
+it to `'assets/cv-en.pdf'`.
+
+- [ ] **Step 5: Verify**
+
+Run `node tools/check.mjs` — must still be 24/24, with no criterion silently
+dropped. Run `npx -y html-validate index.html work/*.html` — must exit clean.
+
+**The mobile fold is the risk in this task.** The hero gains a fifth button,
+and acceptance criterion 1 requires the name, role, availability line,
+relocation line and the CV button all visible without scrolling at 390×844.
+Screenshot and look:
+
+```bash
+python3 -m http.server 8000 &
+SERVER=$!
+google-chrome --headless --disable-gpu --screenshot=/tmp/fold.png \
+  --window-size=390,844 --hide-scrollbars --virtual-time-budget=3000 http://localhost:8000/
+kill $SERVER
+```
+
+Open the image. If the fifth button pushes anything required below the fold,
+say so and stop — do not start trimming the hero on your own judgement.
+
+Also confirm both PDFs actually download: `curl -sI http://localhost:8000/assets/cv-en.pdf`
+and the French equivalent should each return 200.
+
+- [ ] **Step 6: Commit**
+
+```bash
+git add -A
+git commit -m "feat: ship purpose-built CVs in English and French"
+```
