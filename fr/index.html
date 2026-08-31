@@ -60,20 +60,6 @@
   <h2>Sélection de travaux</h2>
 
   <article class="proof-item">
-    <h3>Brownie — assistant IA embarqué pour Android</h3>
-    <p class="meta">Kotlin · Jetpack Compose · LiteRT-LM · open source</p>
-    <dl>
-      <dt>Contrainte</dt>
-      <dd>Un agent d'appel d'outils réellement capable, dans le budget mémoire d'un téléphone, sans cloud ni clé d'API.</dd>
-      <dt>Décision</dt>
-      <dd>Gemma 4 E2B via LiteRT-LM, avec une quantification choisie à l'exécution en fonction de la RAM de l'appareil, le tout réparti sur cinq modules Gradle pour que la couche d'inférence puisse être remplacée à l'arrivée du prochain modèle embarqué.</dd>
-      <dt>Résultat</dt>
-      <dd>120 fichiers Kotlin répartis sur cinq modules, appels d'outils multi-tours, mémoire persistante, client MCP. Rien ne quitte l'appareil.</dd>
-    </dl>
-    <p><a href="work/brownie.html">Lire l'étude de cas Brownie</a> · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">Code source</a></p>
-  </article>
-
-  <article class="proof-item">
     <h3><img class="app-icon" src="../assets/app-hugoboss.png" width="40" height="40" alt="">HUGO BOSS — Tech Lead, applications Android globales</h3>
     <p class="meta">2025–2026 · HUGO BOSS · 15 pays, 8 langues</p>
     <dl>
@@ -118,6 +104,21 @@
 
 <section id="open-source">
   <h2>Développé en public</h2>
+
+  <article class="proof-item">
+    <h3>Brownie — assistant IA embarqué pour Android</h3>
+    <p class="meta">Kotlin · Jetpack Compose · LiteRT-LM · open source</p>
+    <dl>
+      <dt>Contrainte</dt>
+      <dd>Un agent d'appel d'outils réellement capable, dans le budget mémoire d'un téléphone, sans cloud ni clé d'API.</dd>
+      <dt>Décision</dt>
+      <dd>Gemma 4 E2B via LiteRT-LM, avec une quantification choisie à l'exécution en fonction de la RAM de l'appareil, le tout réparti sur cinq modules Gradle pour que la couche d'inférence puisse être remplacée à l'arrivée du prochain modèle embarqué.</dd>
+      <dt>Résultat</dt>
+      <dd>120 fichiers Kotlin répartis sur cinq modules, appels d'outils multi-tours, mémoire persistante, client MCP. Rien ne quitte l'appareil.</dd>
+    </dl>
+    <p><a href="work/brownie.html">Lire l'étude de cas Brownie</a> · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">Code source</a></p>
+  </article>
+
   <ul class="repo-list">
     <li><a href="https://github.com/natanloterio/LiveFolders" rel="noopener noreferrer">LiveFolders</a> — une alternative à MCP fondée sur un système de fichiers virtuel&nbsp;: les outils atteignent les modèles de langage par des entrées/sorties fichier.<span class="stack">Rust</span></li>
     <li><a href="https://github.com/natanloterio/scene-memory" rel="noopener noreferrer">scene-memory</a> — mémoire à emplacements versionnés pour agents conversationnels&nbsp;; score de 477/500 sur LongMemEval.<span class="stack">Python</span></li>
