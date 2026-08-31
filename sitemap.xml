@@ -4,4 +4,12 @@
   <url><loc>https://loterio.me/work/brownie.html</loc><priority>0.8</priority></url>
   <url><loc>https://loterio.me/work/hugo-boss.html</loc><priority>0.8</priority></url>
   <url><loc>https://loterio.me/work/farfetch.html</loc><priority>0.8</priority></url>
+  <url><loc>https://loterio.me/fr/</loc><priority>0.7</priority></url>
+  <url><loc>https://loterio.me/fr/work/brownie.html</loc><priority>0.6</priority></url>
+  <url><loc>https://loterio.me/fr/work/hugo-boss.html</loc><priority>0.6</priority></url>
+  <url><loc>https://loterio.me/fr/work/farfetch.html</loc><priority>0.6</priority></url>
+  <url><loc>https://loterio.me/lb/</loc><priority>0.7</priority></url>
+  <url><loc>https://loterio.me/lb/work/brownie.html</loc><priority>0.6</priority></url>
+  <url><loc>https://loterio.me/lb/work/hugo-boss.html</loc><priority>0.6</priority></url>
+  <url><loc>https://loterio.me/lb/work/farfetch.html</loc><priority>0.6</priority></url>
 </urlset>

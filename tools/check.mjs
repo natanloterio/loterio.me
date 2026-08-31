@@ -3,8 +3,11 @@
 // Dev tool only — never served, never referenced by a page.
 import { readFileSync, existsSync } from 'node:fs';
 
-const PAGES = ['index.html', 'work/brownie.html', 'work/farfetch.html', 'work/hugo-boss.html'];
-const CASES = PAGES.slice(1);
+const LANGS = ['', 'fr/', 'lb/'];
+const PAGES = LANGS.flatMap(d => [`${d}index.html`,
+  `${d}work/brownie.html`, `${d}work/farfetch.html`, `${d}work/hugo-boss.html`]);
+const CASES = PAGES.filter(p => p.includes('work/'));
+const HOMES = PAGES.filter(p => p.endsWith('index.html'));
 const CASE_SECTIONS = ['Problem', 'Constraint', 'Decisions', 'Result', "What I'd do differently"];
 const TOKENS = ['--bg', '--surface', '--text', '--muted', '--accent', '--rule',
                 '--mono', '--sans', '--measure', '--page'];
@@ -108,19 +111,31 @@ check('no inline styles', () => {
   return bad.length === 0 || bad.join('; ');
 });
 
-check('CV link precedes the first case-study link on the home page', () => {
-  const html = read('index.html'); if (!html) return 'index.html missing';
-  const cv = html.indexOf('assets/cv-en.pdf');
-  const work = html.indexOf('work/');
-  if (cv === -1) return 'no CV link';
-  if (work === -1) return 'no case-study link';
-  return cv < work || 'CV link appears after a case-study link';
+check('CV link precedes the first case-study link on every home page', () => {
+  const bad = [];
+  for (const page of HOMES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const cv = html.indexOf('assets/cv-');
+    const work = html.indexOf('work/');
+    if (cv === -1) { bad.push(`${page}: no CV link`); continue; }
+    if (work === -1) { bad.push(`${page}: no case-study link`); continue; }
+    if (cv > work) bad.push(`${page}: CV link appears after a case-study link`);
+  }
+  return bad.length === 0 || bad.join('; ');
 });
 
-check('home page states availability and relocation', () => {
-  const html = read('index.html'); if (!html) return 'index.html missing';
-  const t = textOf(html);
-  return (/\bAvailable\b/.test(t) && /\brelocation\b/i.test(t)) || 'missing availability or relocation line';
+check('every home page carries a substantive status line', () => {
+  const bad = [];
+  for (const page of HOMES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const m = html.match(/<p class="status">([\s\S]*?)<\/p>/);
+    if (!m) { bad.push(`${page}: no status line`); continue; }
+    const n = words(textOf(m[1]));
+    if (n < 10) bad.push(`${page}: status line only ${n} words`);
+  }
+  return bad.length === 0 || bad.join('; ');
 });
 
 check('home page carries schema.org Person JSON-LD', () => {
@@ -142,14 +157,15 @@ check('case studies carry all five sections', () => {
   return bad.length === 0 || bad.join('; ');
 });
 
-check('case studies run 400-700 words', () => {
+check('case studies run within their locale\'s word band', () => {
   const bad = [];
   for (const page of CASES) {
     const html = read(page);
     if (!html) { bad.push(`${page}: missing`); continue; }
     const body = html.match(/<main[\s\S]*?<\/main>/);
     const n = body ? words(textOf(body[0])) : 0;
-    if (n < 400 || n > 700) bad.push(`${page}: ${n}`);
+    const band = page.startsWith('fr/') || page.startsWith('lb/') ? [400, 820] : [400, 700];
+    if (n < band[0] || n > band[1]) bad.push(`${page}: ${n}`);
   }
   return bad.length === 0 || bad.join('; ');
 });
@@ -209,7 +225,8 @@ check('CV, OG image, sitemap and robots.txt exist', () => {
 
 check('sitemap lists every page', () => {
   const xml = read('sitemap.xml'); if (!xml) return 'sitemap.xml missing';
-  const missing = PAGES.filter(p => !xml.includes(p === 'index.html' ? 'loterio.me/' : p));
+  const urlFor = (p) => HOMES.includes(p) ? `loterio.me/${p.slice(0, -'index.html'.length)}` : p;
+  const missing = PAGES.filter(p => !xml.includes(urlFor(p)));
   return missing.length === 0 || `missing: ${missing.join(', ')}`;
 });
 
