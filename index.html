@@ -1,209 +1,162 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>natan loterio</title>
-  <meta name="description" content="Natan Loterio — software engineer, co-founder of pitaia.me. Previously Tech Lead at HUGO BOSS.">
-  <meta property="og:title" content="natan loterio">
-  <meta property="og:description" content="Software engineer with 15+ years of experience. Co-founding pitaia.me.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='4' width='28' height='24' rx='3' fill='%230a0a0a' stroke='%2333ff33' stroke-width='2'/><rect x='4' y='6' width='24' height='4' rx='1' fill='%231a331a'/><circle cx='7' cy='8' r='1.2' fill='%23ff5f56'/><circle cx='11' cy='8' r='1.2' fill='%23ffbd2e'/><circle cx='15' cy='8' r='1.2' fill='%2327c93f'/><text x='7' y='20' font-family='monospace' font-size='7' fill='%2333ff33'>%3E_</text></svg>">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #0a0a0a;
-      --primary: #33ff33;
-      --dimmed: #22bb22;
-      --accent: #66ff66;
-      --border: #1a331a;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      background: var(--bg);
-      color: var(--primary);
-      font-family: 'IBM Plex Mono', 'Courier New', monospace;
-      font-size: 15px;
-      line-height: 1.7;
-      max-width: 700px;
-      margin: 0 auto;
-      padding: 60px 24px;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: repeating-linear-gradient(
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.08) 2px,
-        rgba(0, 0, 0, 0.08) 4px
-      );
-      opacity: 0.5;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-
-    .cursor {
-      animation: blink 1s step-end infinite;
-    }
-
-    header { margin-bottom: 48px; }
-
-    header h1 {
-      font-size: 28px;
-      font-weight: 500;
-      margin-bottom: 12px;
-      text-shadow: 0 0 8px rgba(51, 255, 51, 0.3);
-    }
-
-    header p {
-      color: var(--dimmed);
-      font-size: 14px;
-      line-height: 1.6;
-    }
-
-    header a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    header a:hover {
-      text-decoration: underline;
-    }
-
-    section { margin-bottom: 40px; }
-
-    h2 {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--accent);
-      text-shadow: 0 0 8px rgba(51, 255, 51, 0.3);
-      margin-bottom: 16px;
-    }
-
-    h2::before {
-      content: '## ';
-      color: var(--dimmed);
-    }
-
-    .about p {
-      color: var(--dimmed);
-      font-size: 14px;
-    }
-
-    .experience .entry {
-      margin-bottom: 16px;
-      padding-left: 16px;
-    }
-
-    .experience .entry::before {
-      content: '> ';
-      color: var(--dimmed);
-      margin-left: -16px;
-    }
-
-    .entry .role {
-      color: var(--primary);
-      font-weight: 500;
-    }
-
-    .entry .role a {
-      color: var(--accent);
-      text-decoration: none;
-    }
-
-    .entry .role a:hover {
-      text-decoration: underline;
-    }
-
-    .entry .period {
-      color: var(--dimmed);
-    }
-
-    .entry .desc {
-      color: var(--dimmed);
-      font-size: 14px;
-    }
-
-    .contact a {
-      color: var(--accent);
-      text-decoration: none;
-      display: block;
-      font-size: 14px;
-      line-height: 2;
-    }
-
-    .contact a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      margin-top: 48px;
-      padding-top: 24px;
-      border-top: 1px solid var(--border);
-      color: var(--dimmed);
-      font-size: 13px;
-    }
-
-    @media (max-width: 600px) {
-      body { font-size: 13px; padding: 32px 16px; }
-      header h1 { font-size: 22px; }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Natan Loterio — Senior / Staff Android Engineer</title>
+<meta name="description" content="Senior / Staff Android Engineer with 15 years in Kotlin, Compose and on-device AI. Previously Tech Lead at HUGO BOSS and Android Engineer at FARFETCH. Open to relocation across the EU and UK.">
+<meta property="og:title" content="Natan Loterio — Senior / Staff Android Engineer">
+<meta property="og:description" content="Fifteen years of Android. I take systems shaped by someone else's constraints and put them back under the team's control.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/">
+<meta property="og:type" content="profile">
+<link rel="canonical" href="https://loterio.me/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Natan Loterio","jobTitle":"Senior / Staff Android Engineer","email":"mailto:natanloterio@gmail.com","url":"https://loterio.me/","image":"https://loterio.me/assets/natan.jpg","address":{"@type":"PostalAddress","addressLocality":"Lisbon","addressCountry":"PT"},"alumniOf":{"@type":"CollegeOrUniversity","name":"FURB — Universidade de Blumenau"},"knowsAbout":["Android","Kotlin","Jetpack Compose","On-device machine learning","Mobile architecture"],"sameAs":["https://github.com/natanloterio","https://www.linkedin.com/in/natanloterio","https://natanloterio.substack.com"]}
+</script>
 </head>
 <body>
 
-  <header>
-    <h1>natan loterio<span class="cursor">_</span></h1>
-    <p>Co-founding <a href="https://pitaia.me" target="_blank" rel="noopener noreferrer">pitaia.me &#x2197;</a></p>
-    <p>Previously Tech Lead @ HUGO BOSS</p>
-    <p>Lisbon, Portugal</p>
-  </header>
+<header class="hero">
+  <img class="portrait" src="assets/natan.jpg" width="96" height="96" alt="Natan Loterio">
+  <div>
+    <h1>Natan Loterio</h1>
+    <p class="role">Senior / Staff Android Engineer · Kotlin, Compose, on-device AI · 15 years</p>
+    <p class="status">Available now. Open to relocation across the EU and UK.</p>
+    <nav class="actions" aria-label="Profile links">
+      <a class="btn primary" href="assets/cv.pdf">CV (PDF)</a>
+      <a class="btn" href="https://github.com/natanloterio" rel="noopener noreferrer">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/natanloterio" rel="noopener noreferrer">LinkedIn</a>
+      <a class="btn" href="mailto:natanloterio@gmail.com">Email</a>
+    </nav>
+  </div>
+</header>
 
-  <section class="about">
-    <h2>about</h2>
-    <p>Software engineer with 15+ years of experience. Currently building something new at pitaia.me. Background in leading engineering teams and shipping scalable products — from Android apps to e-commerce platforms at HUGO BOSS and FARFETCH.</p>
-  </section>
+<main>
 
-  <section class="experience">
-    <h2>experience</h2>
-    <div class="entry">
-      <span class="role">Founder — <a href="https://pitaia.me" target="_blank" rel="noopener noreferrer">pitaia.me &#x2197;</a></span> <span class="period">(2026–present)</span><br>
-      <span class="desc">Building something new.</span>
-    </div>
-    <div class="entry">
-      <span class="role">Tech Lead — HUGO BOSS</span> <span class="period">(2025–2026)</span><br>
-      <span class="desc">Led Android architecture modernization and performance improvements.</span>
-    </div>
-    <div class="entry">
-      <span class="role">Android Engineer — FARFETCH</span> <span class="period">(2021–2025)</span><br>
-      <span class="desc">Jetpack Compose adoption, CI/CD pipeline optimization (15min → 2.5min), architecture modernization, dependency injection rollout.</span>
-    </div>
-    <div class="entry">
-      <span class="role">Architecture Analyst — Cecred</span> <span class="period">(2018–2019)</span><br>
-      <span class="desc">Led corporate innovation programs. Drove R$5M in savings.</span>
-    </div>
-  </section>
+<section id="thesis">
+  <h2>What I do</h2>
+  <p>I take systems shaped by someone else's constraints and put them back under the team's control. An Android app owned by an outside agency, brought in-house with a team built around it. A fifteen-minute pipeline cut to two and a half. A language model that only ran in someone else's cloud, running entirely on the phone instead.</p>
+  <p>The work is usually the same shape: find what the team doesn't actually own, and change that. Fifteen years of it, most of them on Android.</p>
+</section>
 
-  <section class="contact">
-    <h2>contact</h2>
-    <a href="mailto:natanloterio@gmail.com">natanloterio@gmail.com</a>
-    <a href="https://linkedin.com/in/natanloterio" rel="noopener noreferrer">linkedin.com/in/natanloterio</a>
-    <a href="https://github.com/natanloterio" rel="noopener noreferrer">github.com/natanloterio</a>
-  </section>
+<section id="proof">
+  <h2>Selected work</h2>
 
-  <footer>$ echo "thanks for visiting"</footer>
+  <article class="proof-item">
+    <h3>Brownie — on-device AI assistant for Android</h3>
+    <p class="meta">Kotlin · Jetpack Compose · LiteRT-LM · open source</p>
+    <dl>
+      <dt>Constraint</dt>
+      <dd>A capable tool-calling agent inside a phone's memory budget, with no cloud and no API key.</dd>
+      <dt>Decision</dt>
+      <dd>Gemma 4 E2B through LiteRT-LM with quantization chosen at runtime from device RAM, split across five Gradle modules so the inference layer can be swapped when the next on-device model lands.</dd>
+      <dt>Result</dt>
+      <dd>383 Kotlin files, multi-turn tool calling, persistent memory, MCP client. Nothing leaves the device.</dd>
+    </dl>
+    <p><a href="work/brownie.html">Read the case study</a> · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">Source</a></p>
+  </article>
+
+  <article class="proof-item">
+    <h3>HUGO BOSS — Tech Lead, Global Android Apps</h3>
+    <p class="meta">2025–2026 · BOSS and HUGO · 15 countries, 8 languages</p>
+    <dl>
+      <dt>Constraint</dt>
+      <dd>Move a live commerce app off an external agency without pausing delivery in fifteen markets.</dd>
+      <dt>Decision</dt>
+      <dd>Insource the codebase as it stood, build the internal Android team from zero, and write the conventions down so a new team could move without a senior engineer in every conversation.</dd>
+      <dt>Result</dt>
+      <dd>Development brought in-house; the conventions defined for Android were adopted across the whole mobile organization.</dd>
+    </dl>
+    <p><a href="work/hugo-boss.html">Read the case study</a> · <a href="https://play.google.com/store/apps/details?id=com.hugoboss.hugoboss" rel="noopener noreferrer">App</a></p>
+  </article>
+
+  <article class="proof-item">
+    <h3>FARFETCH — Android Engineer</h3>
+    <p class="meta">2021–2025 · luxury fashion marketplace</p>
+    <dl>
+      <dt>Constraint</dt>
+      <dd>Modernize a production e-commerce app incrementally, with old and new patterns alive in the same codebase.</dd>
+      <dt>Decision</dt>
+      <dd>Jetpack Compose adopted screen by screen behind the existing navigation, inversion of control through dependency injection, and the build modularized so Gradle's build cache and configuration cache could turn most CI runs into partial builds.</dd>
+      <dt>Result</dt>
+      <dd>Pipeline from 15 minutes to 2.5. Compose and DI became the default for new work.</dd>
+    </dl>
+    <p><a href="work/farfetch.html">Read the case study</a> · <a href="https://play.google.com/store/apps/details?id=com.farfetch.farfetchshop" rel="noopener noreferrer">App</a></p>
+  </article>
+
+  <article class="proof-item">
+    <h3>Pitaia — CTO</h3>
+    <p class="meta">2026–present · AI-native commerce</p>
+    <dl>
+      <dt>Constraint</dt>
+      <dd>Build a commerce platform where an autonomous agent, not a dashboard, is the product.</dd>
+      <dt>Decision</dt>
+      <dd>A 26-tool MCP layer exposing the whole product to language models, so the platform is fully operable by an agent.</dd>
+      <dt>Result</dt>
+      <dd>Blank repo to live stores with paying customers in under six months, including the first Instagram DM agent in the Brazilian creator market to close checkout — conversation to Pix or instalments — without the customer leaving the DM.</dd>
+    </dl>
+    <p><a href="https://pitaia.me" rel="noopener noreferrer">pitaia.me</a></p>
+  </article>
+</section>
+
+<section id="open-source">
+  <h2>Built in public</h2>
+  <ul class="repo-list">
+    <li><a href="https://github.com/natanloterio/LiveFolders" rel="noopener noreferrer">LiveFolders</a> — a virtual filesystem alternative to MCP: tools reach language models through file I/O.<span class="stack">Rust</span></li>
+    <li><a href="https://github.com/natanloterio/scene-memory" rel="noopener noreferrer">scene-memory</a> — versioned-slot memory for conversational agents; scored 477/500 on LongMemEval.<span class="stack">Python</span></li>
+    <li><a href="https://github.com/natanloterio/agent-team" rel="noopener noreferrer">agent-team</a> — a plugin that splits work across parallel coding agents and reviews their pull requests.<span class="stack">JavaScript</span></li>
+    <li><a href="https://github.com/natanloterio/claude-code-employee-grade-skills" rel="noopener noreferrer">claude-code-employee-grade-skills</a> — skills extracted from Claude Code.</li>
+    <li><a href="https://github.com/natanloterio/ArchitectTools" rel="noopener noreferrer">ArchitectTools</a> — IntelliJ plugin for architecture work.<span class="stack">Kotlin</span></li>
+  </ul>
+</section>
+
+<section id="writing">
+  <h2>Writing</h2>
+  <ul class="plain">
+    <li>
+      <a href="https://natanloterio.substack.com/p/why-we-stopped-fighting-our-tools" rel="noopener noreferrer">Why we stopped fighting our tools</a>
+      <span class="period">June 2026</span>
+      <p>On adopting a tool that bends to how a team already works, instead of the other way round.</p>
+    </li>
+  </ul>
+</section>
+
+<section id="track-record">
+  <h2>Track record</h2>
+  <ul class="timeline">
+    <li><span class="period">2026–present</span><span>CTO — Pitaia, Lisbon</span></li>
+    <li><span class="period">2025–2026</span><span>Tech Lead, Global Android Apps — HUGO BOSS, Lisbon</span></li>
+    <li><span class="period">2022–2026</span><span>LLM Engineer — GaiaHub, Lisbon <span class="period">(alongside FARFETCH)</span></span></li>
+    <li><span class="period">2021–2025</span><span>Android Engineer — FARFETCH, Lisbon</span></li>
+    <li><span class="period">2020–2021</span><span>Android Developer — Brelo, Florianópolis</span></li>
+    <li><span class="period">2019–2020</span><span>Android Developer — Facio, São Paulo</span></li>
+    <li><span class="period">2018–2019</span><span>Architecture Analyst — Cecred, Blumenau · drove R$5M in savings</span></li>
+    <li><span class="period">2017–2018</span><span>Senior Android Developer — HBSIS, Blumenau</span></li>
+    <li><span class="period">2014–2016</span><span>Senior Android Developer — ATAR and Morphy Digital Group</span></li>
+    <li><span class="period">2012–2014</span><span>Android Developer — Microton Tecnologia, Blumenau</span></li>
+    <li><span class="period">2008–2011</span><span>Delphi and ERP development</span></li>
+  </ul>
+  <p class="meta">BSc Computer Science, FURB — Universidade de Blumenau.</p>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <ul class="plain">
+    <li><a href="mailto:natanloterio@gmail.com">natanloterio@gmail.com</a></li>
+    <li><a href="https://www.linkedin.com/in/natanloterio" rel="noopener noreferrer">linkedin.com/in/natanloterio</a></li>
+    <li><a href="https://github.com/natanloterio" rel="noopener noreferrer">github.com/natanloterio</a></li>
+    <li><a href="assets/cv.pdf">Download CV (PDF)</a></li>
+  </ul>
+</section>
+
+</main>
+
+<footer>Lisbon, Portugal · Open to relocation across the EU and UK</footer>
 
 </body>
 </html>
