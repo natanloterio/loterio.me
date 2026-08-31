@@ -52,7 +52,7 @@ judgement, and an interviewer will find the seam.
 | # | Input | Needed by |
 |---|---|---|
 | A1 | "What I'd do differently" — one paragraph per case study, three total | Tasks 3, 4, 5 |
-| A2 | ~~How the FARFETCH pipeline went from 15 min to 2.5~~ — **answered**: modularization, then Gradle caching, in that order | resolved |
+| A2 | ~~How the FARFETCH pipeline went from 15 min to 2.5~~ — **answered**: modularization, then Gradle's build cache and configuration cache | resolved |
 | A3 | Written permission to publish the HUGO BOSS figures | Task 5 |
 | A4 | Whether to state EU citizenship or UK work authorization in the hero | Task 2 |
 | A5 | ~~Confirmation that the thesis is true to how he sees his work~~ — **confirmed by Natan**; ship the drafted wording | resolved |
@@ -662,7 +662,7 @@ Replace `index.html` entirely:
       <dt>Constraint</dt>
       <dd>Modernize a production e-commerce app incrementally, with old and new patterns alive in the same codebase.</dd>
       <dt>Decision</dt>
-      <dd>Jetpack Compose adopted screen by screen behind the existing navigation, inversion of control through dependency injection, and the build modularized so that Gradle caching could turn most CI runs into partial builds.</dd>
+      <dd>Jetpack Compose adopted screen by screen behind the existing navigation, inversion of control through dependency injection, and the build modularized so Gradle's build cache and configuration cache could turn most CI runs into partial builds.</dd>
       <dt>Result</dt>
       <dd>Pipeline from 15 minutes to 2.5. Compose and DI became the default for new work.</dd>
     </dl>
@@ -875,8 +875,10 @@ git commit -m "feat: add Brownie case study"
 - [ ] **Step 1: Ask for A1**
 
 A2 is answered and already written into the copy below: modularization
-first, then Gradle caching. Do not reword the mechanism — the order is the
-substance of the answer, and an Android interviewer will probe it.
+first, then Gradle's build cache and configuration cache. Do not reword the
+mechanism. The order is the substance of the answer, and the two caches are
+named separately on purpose because they remove different costs — an Android
+interviewer will probe exactly this.
 
 Ask **A1**: what would Natan do differently about the Compose migration?
 
@@ -902,7 +904,8 @@ values below, and replace everything between `<main class="case">` and
 <ul>
 <li><strong>Jetpack Compose adopted screen by screen, behind the existing navigation.</strong> New screens were written in Compose; old ones moved when they were being opened for other reasons anyway. No migration sprint, no feature freeze, no branch that lives for six months.</li>
 <li><strong>Inversion of control through dependency injection.</strong> This was the change that made the rest possible. Untangling construction from behaviour is what let a single screen move without dragging its dependencies with it.</li>
-<li><strong>Modularization first, caching second — in that order.</strong> Splitting the monolith into Gradle modules is what made the build cacheable at all. With a single module almost any change invalidates the whole build, so a cache buys you very little; once the boundaries exist, a change touches a few modules and the rest are served from cache. With modularization in place, Gradle's caching turned most CI runs into partial builds rather than full ones.</li>
+<li><strong>Modularization first, caching second — in that order.</strong> Splitting the monolith into Gradle modules is what made the build cacheable at all. With a single module almost any change invalidates the whole build, so a cache buys you very little; once the boundaries exist, a change touches a few modules and the rest are served from cache.</li>
+<li><strong>Then both Gradle caches, against two different costs.</strong> The build cache reuses task outputs across builds and across machines, so CI stops recomputing what another run already produced. The configuration cache removes the configuration phase from repeat runs — the fixed price every single build paid before, regardless of how little had changed.</li>
 </ul>
 
 <h2>Result</h2>
