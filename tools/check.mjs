@@ -238,11 +238,22 @@ check('CV, OG image, sitemap and robots.txt exist', () => {
   return missing.length === 0 || `missing: ${missing.join(', ')}`;
 });
 
-check('sitemap lists every page', () => {
-  const xml = read('sitemap.xml'); if (!xml) return 'sitemap.xml missing';
-  const urlFor = (p) => HOMES.includes(p) ? `loterio.me/${p.slice(0, -'index.html'.length)}` : p;
-  const missing = PAGES.filter(p => !xml.includes(urlFor(p)));
-  return missing.length === 0 || `missing: ${missing.join(', ')}`;
+check('sitemap lists exactly the indexable pages', () => {
+  const xml = read('sitemap.xml');
+  if (!xml) return 'sitemap.xml missing';
+  const bad = [];
+  for (const page of PAGES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const noindex = /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/.test(html);
+    const url = page.endsWith('index.html')
+      ? `https://loterio.me/${page.slice(0, -'index.html'.length)}`
+      : `https://loterio.me/${page}`;
+    const listed = xml.includes(`<loc>${url}</loc>`);
+    if (noindex && listed) bad.push(`${page}: noindex but listed in sitemap`);
+    if (!noindex && !listed) bad.push(`${page}: indexable but missing from sitemap`);
+  }
+  return bad.length === 0 || bad.join('; ');
 });
 
 const failed = results.filter(r => !r.ok);
