@@ -1377,3 +1377,80 @@ and the French equivalent should each return 200.
 git add -A
 git commit -m "feat: ship purpose-built CVs in English and French"
 ```
+
+
+---
+
+### Task 9: State the Luxembourgish nationality application in the hero
+
+The CVs added in Task 8 carry a fact the site does not: Natan has an
+application to recover Luxembourgish nationality filed and under review, on
+the basis of Luxembourgish ancestry.
+
+This is the strongest work-authorisation signal he has. "Open to relocation"
+puts him in the same pile as every candidate willing to move — it reads to a
+recruiter as visa sponsorship, uncertain timeline, cost and risk. A
+nationality application under review says the authorisation question has a
+path and a clock. It is the difference between being filtered out and being
+called.
+
+**Decision recorded:** the line keeps the EU/UK breadth rather than narrowing
+to Luxembourg alone. The nationality is additional information, not a
+replacement for reach — narrowing would discard roles in Berlin, Amsterdam
+and London to gain nothing, since a Luxembourg recruiter reads the same
+sentence and receives the same signal either way. Natan approved the change
+and was told this choice was made for him.
+
+**The claim must not outrun the CV.** The application is *filed and under
+review*, not granted. The wording below states exactly that and nothing more.
+
+**Files:**
+- Modify: `index.html` (hero status line only)
+
+- [ ] **Step 1: Replace the status line**
+
+Current:
+
+```html
+  <p class="status">Available now. Open to relocation across the EU and UK.</p>
+```
+
+New:
+
+```html
+  <p class="status">Available now. Open to relocation across the EU and UK, with a Luxembourgish nationality application filed and under review.</p>
+```
+
+Change nothing else. The footer and meta description keep their existing
+wording — repeating the claim there adds nothing and lengthens a meta
+description that is already past the length search engines display.
+
+- [ ] **Step 2: Verify the mobile fold, again**
+
+This line is roughly twice as long as the one it replaces, so on a 390px
+viewport it wraps to three lines instead of two. Acceptance criterion 1 still
+requires the name, role line, availability line, relocation line and the CV
+button visible without scrolling at 390×844.
+
+```bash
+python3 -m http.server 8000 &
+SERVER=$!
+google-chrome --headless --disable-gpu --screenshot=/tmp/fold.png \
+  --window-size=390,844 --hide-scrollbars --virtual-time-budget=3000 http://localhost:8000/
+kill $SERVER
+```
+
+Look at the image. If anything required falls below the fold, say so and stop
+rather than trimming the hero yourself.
+
+- [ ] **Step 3: Verify and commit**
+
+`node tools/check.mjs` must stay at 24/24 — the `home page states availability
+and relocation` criterion looks for the words "Available" and "relocation",
+both still present. `npx -y html-validate index.html work/*.html` must exit
+clean.
+
+```bash
+git add index.html
+git commit -m "feat: state the Luxembourgish nationality application in the hero"
+```
