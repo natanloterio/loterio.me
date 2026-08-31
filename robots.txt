@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://loterio.me/sitemap.xml
