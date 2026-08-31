@@ -5,6 +5,7 @@
   --muted: #5a5f59;
   --accent: #157f4a;
   --rule: #d8d5cf;
+  --rule-interactive: #a8a49c;
   --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --measure: 68ch;
@@ -21,6 +22,7 @@
     --muted: #8b8f8a;
     --accent: #63c98a;
     --rule: #262826;
+    --rule-interactive: #4a4d49;
   }
 }
 
@@ -88,7 +90,7 @@ section { margin-top: var(--s16); }
   font-size: 14px;
   text-decoration: none;
   color: var(--text);
-  border: 1px solid var(--rule);
+  border: 1px solid var(--rule-interactive);
   border-radius: 3px;
   padding: 10px var(--s4);
   min-height: 44px;
