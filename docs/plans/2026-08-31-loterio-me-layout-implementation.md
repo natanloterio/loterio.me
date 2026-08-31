@@ -65,10 +65,16 @@ behaviour: an empty section is a visible gap, an invented one is a lie with
 his name on it, and a deleted one quietly drops the strongest seniority
 signal on the site.
 
-Never leave the guidance comment in the shipped HTML. HTML comments are
-visible in view-source, and "Natan writes this paragraph" on a live
-job-search page is worse than the empty section it marks. The checker fails
-on any such marker.
+Never leave a guidance comment in the shipped HTML. HTML comments are visible
+in view-source, and "Natan writes this paragraph" on a live job-search page is
+worse than the empty section it marks. The checker fails on any such marker.
+
+So the convention in Tasks 3–5 is: write the `<h2>What I'd do differently</h2>`
+heading and put **nothing** under it. No paragraph, no comment, no placeholder
+prose. The checker then reports `<page>: 0 words — author input A1
+outstanding`, which names the gap precisely, keeps the build red, and leaks
+nothing to a visitor who views source. When Natan supplies the paragraph, it
+drops in under the heading and the criterion goes green.
 
 If A3 is unanswered, Task 5 does not start.
 
@@ -848,7 +854,6 @@ paragraph for him.
 <p>No cloud, no API key, no data leaving the phone. After the one-time model download, the engine loads in five to fifteen seconds and the app works with the network off.</p>
 
 <h2>What I'd do differently</h2>
-<p><!-- A1: Natan writes this paragraph. If it is still unanswered when the rest of the page is done, delete this h2 and its paragraph and reopen the task. Do not invent it. --></p>
 </main>
 
 <footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
@@ -925,7 +930,6 @@ values below, and replace everything between `<main class="case">` and
 <p>Compose and dependency injection both became the default for new work rather than parallel experiments, which is the only durable outcome an incremental migration can have: the new way has to be the easy way, or the old way wins by inertia.</p>
 
 <h2>What I'd do differently</h2>
-<p><!-- A1: Natan writes this paragraph. Do not invent it. --></p>
 ```
 
 Head values for this page:
@@ -1007,7 +1011,6 @@ everything between `<main class="case">` and `</main>` with:
 <p>The clearest signal that the work outlived the project: the conventions, architecture patterns and way of working defined for Android were adopted by management across the whole mobile organization. The codebase was modernized to current engineering standards so that e-commerce, click-and-collect, in-store appointments and the HUGO BOSS XP loyalty programme could scale with the business rather than against it.</p>
 
 <h2>What I'd do differently</h2>
-<p><!-- A1: Natan writes this paragraph. Do not invent it. --></p>
 ```
 
 Head values for this page:
