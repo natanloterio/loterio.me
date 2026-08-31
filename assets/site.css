@@ -175,3 +175,11 @@ footer {
 .langs span { color: var(--text); }
 .langs a { color: var(--muted); text-decoration: none; }
 .langs a:hover { color: var(--accent); text-decoration: underline; }
+
+.app-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 22%;
+  vertical-align: -10px;
+  margin-right: var(--s3);
+}
