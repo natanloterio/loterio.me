@@ -749,11 +749,19 @@ Replace `index.html` entirely:
 - [ ] **Step 5: Run the checker**
 
 Run: `node tools/check.mjs`
-Expected: `index.html exists`, `no executable script tags`, `exactly one h1
-per page`, `lang attribute`, `no inline styles`, `no img without alt`,
-`CV link precedes the first case-study link`, `home page states availability
-and relocation` and `home page carries schema.org Person JSON-LD` all PASS.
-Case-study and asset criteria still FAIL.
+Expected to PASS: `index.html exists`, `no executable script tags`,
+`no inline styles`, `no img without alt`, `CV link precedes the first
+case-study link`, `home page states availability and relocation`, and
+`home page carries schema.org Person JSON-LD`.
+
+Expected to still FAIL: every criterion that iterates all four pages —
+`exactly one h1 per page`, `lang attribute on every page`, and `every page
+has title, description and Open Graph tags`. These cannot go green until
+Tasks 3–5 create the three `work/*.html` files, because the Task 1 fix made
+a missing page an honest failure rather than a silent skip. A green result
+here would mean the checker regressed.
+
+Case-study and asset criteria also still FAIL.
 
 - [ ] **Step 6: Look at it**
 
