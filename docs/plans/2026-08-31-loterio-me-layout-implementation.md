@@ -56,9 +56,20 @@ judgement, and an interviewer will find the seam.
 | A4 | Whether to state EU citizenship or UK work authorization in the hero | Task 2 |
 | A5 | Confirmation that the thesis is true to how he sees his work, and a pass over its wording in his own voice | Task 2 |
 
-If A1 is unanswered when a case study is otherwise complete, ship the page
-without that section and reopen it — an absent section is honest, an invented
-one is not. If A3 is unanswered, Task 5 does not start.
+A1 is not optional and the section is never deleted. Spec §8 makes it a
+required part of every case study, and the checker enforces at least 20 words
+of real prose under that heading — so the build stays red, and the site does
+not deploy, until Natan has written all three. That is the intended
+behaviour: an empty section is a visible gap, an invented one is a lie with
+his name on it, and a deleted one quietly drops the strongest seniority
+signal on the site.
+
+Never leave the guidance comment in the shipped HTML. HTML comments are
+visible in view-source, and "Natan writes this paragraph" on a live
+job-search page is worse than the empty section it marks. The checker fails
+on any such marker.
+
+If A3 is unanswered, Task 5 does not start.
 
 ---
 
@@ -249,6 +260,19 @@ check('stylesheet defines every token in both schemes', () => {
   if (!css.includes('prefers-color-scheme: dark')) return 'no dark scheme';
   if (!css.includes('@media print')) return 'no print styles';
   return true;
+});
+
+check('every case study answers "what I\'d do differently"', () => {
+  const bad = [];
+  for (const page of CASES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const tail = html.split(/<h2[^>]*>\s*What I'd do differently\s*<\/h2>/)[1];
+    if (tail === undefined) { bad.push(`${page}: no heading`); continue; }
+    const n = words(textOf(tail.split('</main>')[0]));
+    if (n < 20) bad.push(`${page}: ${n} words — author input A1 outstanding`);
+  }
+  return bad.length === 0 || bad.join('; ');
 });
 
 check('no author-input markers left in shipped HTML', () => {
