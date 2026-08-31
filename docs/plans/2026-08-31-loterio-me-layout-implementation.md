@@ -1688,3 +1688,106 @@ while preventing them from accumulating search presence in the meantime.
 
 Removing both markers is the checklist for "Luxembourgish validated". Nothing
 else about the pages changes at that point.
+
+
+---
+
+### Task 13: Sitemap correctness for a multilingual, partly-unindexed site
+
+`sitemap.xml` was written in Task 6 for four English pages and extended in
+Task 10 to twelve. It is valid XML and lists every page. Two problems have
+appeared since, both created by decisions taken after it was written.
+
+**Problem 1 — it contradicts `noindex`.** The four Luxembourgish pages ship
+with `<meta name="robots" content="noindex">` until a native speaker reviews
+them. A sitemap entry says "index this"; the meta tag says "do not". Google
+Search Console reports the combination as *Submitted URL marked 'noindex'*,
+and a site that sends contradictory signals about a third of its URLs is
+teaching the crawler to trust it less everywhere.
+
+**Problem 2 — a multilingual sitemap should carry `hreflang`.** The pages
+already declare their alternates in `<head>`. Declaring them in the sitemap as
+well is the form Google documents for multilingual sites, and it is the only
+one a crawler sees before fetching the page.
+
+**Files:** `sitemap.xml`, `tools/check.mjs`, and the plan's copy of the checker.
+
+- [ ] **Step 1: Rewrite `sitemap.xml`**
+
+Eight URLs, not twelve — English and French only. Add the `xhtml` namespace and
+give every entry its full set of `xhtml:link` alternates. Include the
+Luxembourgish alternates in the `xhtml:link` sets even though those pages are
+not themselves listed: `hreflang` describes what exists, the `<url>` list
+describes what to index, and the two questions are different.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://loterio.me/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://loterio.me/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://loterio.me/fr/"/>
+    <xhtml:link rel="alternate" hreflang="lb" href="https://loterio.me/lb/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://loterio.me/"/>
+    <lastmod>2026-08-31</lastmod>
+    <priority>1.0</priority>
+  </url>
+  ...
+</urlset>
+```
+
+Follow that shape for all eight: the English home and its three case pages
+(priority 1.0 and 0.8), then the French home and its three (0.7 and 0.6).
+Every `<url>` carries the same four `xhtml:link` lines pointing at its own
+language triple plus `x-default` on the English URL.
+
+- [ ] **Step 2: Replace the sitemap criterion in `tools/check.mjs`**
+
+The current criterion asserts every page appears in the sitemap, which would
+now fail by design. Replace it with one that tests the actual rule — a page is
+listed if and only if it is indexable:
+
+```js
+check('sitemap lists exactly the indexable pages', () => {
+  const xml = read('sitemap.xml');
+  if (!xml) return 'sitemap.xml missing';
+  const bad = [];
+  for (const page of PAGES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const noindex = /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/.test(html);
+    const url = page.endsWith('index.html')
+      ? `https://loterio.me/${page.slice(0, -'index.html'.length)}`
+      : `https://loterio.me/${page}`;
+    const listed = xml.includes(`<loc>${url}</loc>`);
+    if (noindex && listed) bad.push(`${page}: noindex but listed in sitemap`);
+    if (!noindex && !listed) bad.push(`${page}: indexable but missing from sitemap`);
+  }
+  return bad.length === 0 || bad.join('; ');
+});
+```
+
+This is a better test than the one it replaces: it fails in both directions,
+and it keeps working without edits when the Luxembourgish pages are validated
+and their `noindex` is removed — at which point the same criterion will demand
+they be added to the sitemap.
+
+Apply the change identically to the plan's copy of the checker.
+
+- [ ] **Step 3: Verify**
+
+- `xmllint --noout sitemap.xml` → clean.
+- `node tools/check.mjs` → the sitemap criterion passes with eight listed and
+  four correctly withheld. Paste the criterion's line.
+- Confirm by hand that removing `noindex` from one Luxembourgish page makes the
+  criterion fail with `indexable but missing from sitemap`, then put it back.
+  A test that cannot fail is not a test.
+- `curl -sI https://loterio.me/sitemap.xml` is not applicable — nothing is
+  deployed.
+
+- [ ] **Step 4: Commit**
+
+Note in the commit message that adding the four Luxembourgish URLs is part of
+the Luxembourgish-validation checklist, alongside removing the `noindex` tags
+and the maintainer comments.
