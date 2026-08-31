@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FARFETCH — modernizing a live e-commerce app · Natan Loterio</title>
+<meta name="description" content="Modernizing FARFETCH's Android app in production: incremental Jetpack Compose adoption, dependency injection, and a CI pipeline cut from 15 minutes to 2.5.">
+<meta property="og:title" content="FARFETCH — modernizing a live e-commerce app">
+<meta property="og:description" content="Incremental Compose adoption and dependency injection on a production e-commerce app, plus a pipeline cut from 15 minutes to 2.5.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/work/farfetch.html">
+<link rel="canonical" href="https://loterio.me/work/farfetch.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<nav class="case-nav"><a href="../index.html">&larr; Natan Loterio</a></nav>
+
+<main class="case">
+<h1>FARFETCH — modernizing a live e-commerce app</h1>
+<p class="meta">Android Engineer · August 2021 – April 2025 · <a href="https://play.google.com/store/apps/details?id=com.farfetch.farfetchshop" rel="noopener noreferrer">FARFETCH on Google Play</a></p>
+
+<h2>Problem</h2>
+<p>FARFETCH is a luxury fashion marketplace, and its Android app takes orders from customers around the world. By 2021 the codebase carried years of accumulated decisions: MVC in the oldest screens, MVVM in the newer ones, dependencies wired by hand throughout. None of it was wrong when it was written, and all of it made the next change slower than the last.</p>
+<p>The continuous integration pipeline took fifteen minutes per run. Fifteen minutes is past the threshold where engineers stop running it and start batching, which is how integration problems get found late and expensively.</p>
+
+<h2>Constraint</h2>
+<p>Nothing could stop. The app was in production taking revenue, on a release train that did not pause for architecture work. Every change had to land incrementally, and both the old and the new patterns had to stay alive in the same codebase for as long as the migration ran — which meant years, not sprints.</p>
+
+<h2>Decisions</h2>
+<ul>
+<li><strong>Jetpack Compose adopted screen by screen, behind the existing navigation.</strong> New screens were written in Compose; old ones moved when they were being opened for other reasons anyway. No migration sprint, no feature freeze, no branch that lives for six months.</li>
+<li><strong>Inversion of control through dependency injection.</strong> This was the change that made the rest possible. Untangling construction from behaviour is what let a single screen move without dragging its dependencies with it.</li>
+<li><strong>Modularization first, caching second — in that order.</strong> Splitting the monolith into Gradle modules is what made the build cacheable at all. With a single module almost any change invalidates the whole build, so a cache buys you very little; once the boundaries exist, a change touches a few modules and the rest are served from cache.</li>
+<li><strong>Then both Gradle caches, against two different costs.</strong> The build cache reuses task outputs across builds and across machines, so CI stops recomputing what another run already produced. The configuration cache removes the configuration phase from repeat runs — the fixed price every single build paid before, regardless of how little had changed.</li>
+</ul>
+
+<h2>Result</h2>
+<p>The pipeline went from 15 minutes to 2.5 on average — back under the threshold where engineers run it per change instead of batching.</p>
+<p>Compose and dependency injection both became the default for new work rather than parallel experiments, which is the only durable outcome an incremental migration can have: the new way has to be the easy way, or the old way wins by inertia.</p>
+
+<h2>What I'd do differently</h2>
+</main>
+
+<footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
+
+</body>
+</html>
