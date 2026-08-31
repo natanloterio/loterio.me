@@ -45,6 +45,7 @@
 <p>No cloud, no API key, no data leaving the phone. After the one-time model download, the engine loads in five to fifteen seconds and the app works with the network off.</p>
 
 <h2>What I'd do differently</h2>
+<p>The tool layer outgrew the app. <code>:core:tools</code> ended up larger than the UI module — forty-four files against forty-one — because every new capability meant another implementation compiled into the binary. The MCP client I added in v6 is the right shape, and I would start there: a thin built-in set for the things that genuinely need process access, and everything else behind a tool server that can change without shipping an APK. I reached that boundary late; it should have been the first one.</p>
 </main>
 
 <footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>

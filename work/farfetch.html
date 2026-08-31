@@ -44,6 +44,7 @@
 <p>Compose and dependency injection both became the default for new work rather than parallel experiments, which is the only durable outcome an incremental migration can have: the new way has to be the easy way, or the old way wins by inertia.</p>
 
 <h2>What I'd do differently</h2>
+<p>I would modularize before migrating, not alongside it. We did both at once, and the same argument I make for the build cache applies to the migration: module boundaries are what make an incremental change cheap. Without them, every screen moved to Compose still dragged the whole dependency graph behind it, and the migration paid a tax it did not need to pay. The pipeline work proved the point — I just proved it in the wrong order.</p>
 </main>
 
 <footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
