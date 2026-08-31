@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brownie — on-device AI on Android · Natan Loterio</title>
+<meta name="description" content="Building a tool-calling AI agent that runs entirely on an Android phone: Gemma 4 E2B through LiteRT-LM, quantization chosen from device RAM, five Gradle modules, no cloud.">
+<meta property="og:title" content="Brownie — on-device AI on Android">
+<meta property="og:description" content="A capable tool-calling agent inside a phone's memory budget. No cloud, no API key, no data leaving the device.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/work/brownie.html">
+<link rel="canonical" href="https://loterio.me/work/brownie.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+</head>
+<body>
+
+<nav class="case-nav"><a href="../index.html">&larr; Natan Loterio</a></nav>
+
+<main class="case">
+<h1>Brownie — on-device AI on Android</h1>
+<p class="meta">Personal project · Kotlin, Jetpack Compose, LiteRT-LM · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">source on GitHub</a></p>
+
+<h2>Problem</h2>
+<p>Every capable AI assistant on a phone is a thin client. The model lives in someone else's datacentre, the conversation travels there and back, and the whole thing stops working on a plane or behind a corporate firewall. Privacy is a policy promise rather than a property of the system.</p>
+<p>I wanted to know what was actually left if you refused all of that — not a chatbot demo, but a real agent that calls tools, reads and writes files, remembers across sessions and drives the device, running entirely on the hardware in your pocket.</p>
+
+<h2>Constraint</h2>
+<p>A phone is not a server. There is no meaningful swap, the memory budget is shared with every other running app, and sustained inference runs straight into thermal throttling. The model weights, the tool layer, the conversation history and the UI all have to fit in what a mid-range Android device can spare — and the interface has to stay responsive while the model is working.</p>
+<p>The second constraint was self-imposed and harder: no cloud fallback. A hybrid design that quietly calls a remote model when the device struggles would have made every demo smoother and destroyed the reason for building it.</p>
+
+<h2>Decisions</h2>
+<ul>
+<li><strong>Quantization chosen at runtime, not at build time.</strong> The app detects available RAM on first launch and picks a tier: Q4 at roughly 1.5&nbsp;GB for 6–8&nbsp;GB devices, Q4 plus a vision projector for 8–12&nbsp;GB, Q8 with vision above that. Below 6&nbsp;GB the app says it will not work, rather than failing slowly and blaming the user.</li>
+<li><strong>Five Gradle modules instead of one.</strong> <code>:core:inference</code> wraps LiteRT-LM, model download and device detection; <code>:core:agent</code> holds the loop; <code>:core:tools</code> the registry and its twelve implementations; <code>:core:memory</code> persistence, profile and full-text session search; <code>:app</code> the Compose UI. The boundary that earned its keep was inference — it is the piece most certain to be replaced when the next on-device model ships.</li>
+<li><strong>Context compression rather than truncation.</strong> When the window fills, the agent summarises and continues. Truncation would have been a day's work; losing the earlier half of a conversation is exactly the failure users cannot diagnose.</li>
+<li><strong>An MCP client.</strong> New tools can be added by pointing the app at a server, without shipping an APK.</li>
+</ul>
+
+<h2>Result</h2>
+<p>383 Kotlin files across five modules, 198 commits. Multi-turn tool calling up to ten iterations per message, streaming responses with tool-call chips in the UI, file tools in a sandboxed workspace, contacts, calendar, clipboard, scheduled autonomous tasks, screen reading and device automation through the accessibility APIs, web extraction through a WebView, and speech in both directions.</p>
+<p>No cloud, no API key, no data leaving the phone. After the one-time model download, the engine loads in five to fifteen seconds and the app works with the network off.</p>
+
+<h2>What I'd do differently</h2>
+</main>
+
+<footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
+
+</body>
+</html>
