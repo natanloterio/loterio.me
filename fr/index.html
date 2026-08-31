@@ -53,7 +53,7 @@
 <section id="thesis">
   <h2>Ce que je fais</h2>
   <p>Je reprends des systèmes façonnés par les contraintes d'un tiers et j'en redonne la maîtrise à l'équipe. Une application Android détenue par une agence externe, internalisée avec une équipe constituée autour d'elle. Un pipeline de quinze minutes ramené à deux minutes et demie. Un modèle de langage qui ne tournait que dans le cloud d'un tiers, et qui tourne désormais entièrement sur le téléphone.</p>
-  <p>Le travail a presque toujours la même forme&nbsp;: trouver ce que l'équipe ne maîtrise pas réellement, et le changer. Quinze ans de métier, dont l'essentiel sur Android.</p>
+  <p>Le travail prend en général la même forme&nbsp;: trouver ce que l'équipe ne maîtrise pas réellement, et le changer. Quinze ans de métier, dont l'essentiel sur Android.</p>
 </section>
 
 <section id="proof">
@@ -64,11 +64,11 @@
     <p class="meta">Kotlin · Jetpack Compose · LiteRT-LM · open source</p>
     <dl>
       <dt>Contrainte</dt>
-      <dd>Un agent capable d'appeler des outils, dans le budget mémoire d'un téléphone, sans cloud ni clé d'API.</dd>
+      <dd>Un agent d'appel d'outils réellement capable, dans le budget mémoire d'un téléphone, sans cloud ni clé d'API.</dd>
       <dt>Décision</dt>
       <dd>Gemma 4 E2B via LiteRT-LM, avec une quantification choisie à l'exécution en fonction de la RAM de l'appareil, le tout réparti sur cinq modules Gradle pour que la couche d'inférence puisse être remplacée à l'arrivée du prochain modèle embarqué.</dd>
       <dt>Résultat</dt>
-      <dd>120 fichiers Kotlin répartis sur cinq modules, appels d'outils sur plusieurs tours, mémoire persistante, client MCP. Rien ne quitte l'appareil.</dd>
+      <dd>120 fichiers Kotlin répartis sur cinq modules, appels d'outils multi-tours, mémoire persistante, client MCP. Rien ne quitte l'appareil.</dd>
     </dl>
     <p><a href="work/brownie.html">Lire l'étude de cas Brownie</a> · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">Code source</a></p>
   </article>
@@ -78,9 +78,9 @@
     <p class="meta">2025–2026 · BOSS et HUGO · 15 pays, 8 langues</p>
     <dl>
       <dt>Contrainte</dt>
-      <dd>Reprendre à une agence externe une application de commerce en production, sans interrompre les livraisons sur quinze marchés.</dd>
+      <dd>Reprendre à une agence externe une application de commerce en production, sans interrompre le rythme de livraison sur quinze marchés.</dd>
       <dt>Décision</dt>
-      <dd>Internaliser la base de code telle quelle, constituer l'équipe Android interne à partir de zéro et mettre les conventions par écrit, pour qu'une nouvelle équipe puisse avancer sans un ingénieur senior dans chaque conversation.</dd>
+      <dd>Internaliser la base de code telle quelle, constituer l'équipe Android interne à partir de zéro et mettre les conventions par écrit, pour qu'une nouvelle équipe puisse avancer sans qu'un ingénieur senior soit présent dans chaque conversation.</dd>
       <dt>Résultat</dt>
       <dd>Développement internalisé&nbsp;; les conventions définies pour Android ont ensuite été adoptées dans toute l'organisation mobile.</dd>
     </dl>
@@ -92,7 +92,7 @@
     <p class="meta">2021–2025 · marketplace de mode de luxe</p>
     <dl>
       <dt>Contrainte</dt>
-      <dd>Moderniser de façon incrémentale une application e-commerce en production, avec les anciens et les nouveaux patterns coexistant dans la même base de code.</dd>
+      <dd>Moderniser de façon incrémentale une application e-commerce en production, où anciens et nouveaux patterns coexistent dans la même base de code.</dd>
       <dt>Décision</dt>
       <dd>Adoption de Jetpack Compose écran par écran derrière la navigation existante, inversion de contrôle via l'injection de dépendances, et modularisation du build pour que le build cache et le configuration cache de Gradle transforment la plupart des exécutions CI en builds partiels.</dd>
       <dt>Résultat</dt>
