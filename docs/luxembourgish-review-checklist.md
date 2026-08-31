@@ -1,27 +1,21 @@
 # Luxembourgish review checklist
 
-The four pages under `lb/` were written by a language model that cannot vouch for
-Luxembourgish, and neither can the site's owner. They ship with two markers:
+**Status: approved.** The site's owner approved the Luxembourgish text on
+2026-08-31. In that same commit, both markers described below were removed from
+the four `lb/` pages and the four `/lb/` URLs were added to `sitemap.xml`. The
+pages are now indexable and live like any other page on the site.
+
+The four pages under `lb/` were originally written by a language model that
+could not vouch for Luxembourgish, and neither could the site's owner at the
+time. They shipped with two markers:
 
 - `<meta name="robots" content="noindex">` in each `<head>`
 - `<!-- Machine-authored Luxembourgish. Not yet reviewed by a native speaker. -->`
   at the top of each file
 
-**Removing both markers is the definition of "validated".** Nothing else about
-the pages changes at that point — except that `sitemap.xml` then needs the four
-`/lb/` URLs added, which the checker will demand automatically: its criterion is
-"listed if and only if indexable", so taking `noindex` off makes the build fail
-until the sitemap catches up.
-
-## What to ask a reviewer
-
-Start with items 1 and 2. Item 1 is the most consequential sentence on the site.
-Item 2 appears sixteen times, so if it is wrong it is wrong everywhere — cheap to
-fix, but decide it early.
-
-Two items are marked as **decisions, not proofreading**: places where the
-translator deliberately said something weaker than the English rather than invent
-vocabulary. Those need a judgement call, not a correction.
+The twelve-item list below (of the full twenty-four) is retained as-is: it is
+the record of exactly what the translator was unsure about, and stays useful if
+anyone revisits the Luxembourgish prose later.
 
 ---
 

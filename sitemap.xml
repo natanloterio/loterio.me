@@ -73,4 +73,40 @@
     <lastmod>2026-08-31</lastmod>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://loterio.me/lb/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://loterio.me/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://loterio.me/fr/"/>
+    <xhtml:link rel="alternate" hreflang="lb" href="https://loterio.me/lb/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://loterio.me/"/>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://loterio.me/lb/work/brownie.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://loterio.me/work/brownie.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/brownie.html"/>
+    <xhtml:link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/brownie.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://loterio.me/work/brownie.html"/>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://loterio.me/lb/work/hugo-boss.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://loterio.me/work/hugo-boss.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/hugo-boss.html"/>
+    <xhtml:link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/hugo-boss.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://loterio.me/work/hugo-boss.html"/>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://loterio.me/lb/work/farfetch.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://loterio.me/work/farfetch.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/farfetch.html"/>
+    <xhtml:link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/farfetch.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://loterio.me/work/farfetch.html"/>
+    <lastmod>2026-08-31</lastmod>
+    <priority>0.6</priority>
+  </url>
 </urlset>
