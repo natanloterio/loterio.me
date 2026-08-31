@@ -46,7 +46,7 @@ check('every page under 400 lines', () => {
 check('exactly one h1 per page', () => {
   const bad = [];
   for (const page of PAGES) {
-    const html = read(page); if (!html) continue;
+    const html = read(page); if (!html) { bad.push(`${page}: missing`); continue; }
     const n = (html.match(/<h1[\s>]/g) || []).length;
     if (n !== 1) bad.push(`${page}: ${n}`);
   }
@@ -66,20 +66,24 @@ check('no skipped heading levels', () => {
 });
 
 check('lang attribute on every page', () => {
-  const bad = PAGES.filter(p => read(p) && !/<html[^>]+lang=/.test(read(p)));
+  const bad = [];
+  for (const page of PAGES) {
+    const html = read(page); if (!html) { bad.push(page); continue; }
+    if (!/<html[^>]+lang=/.test(html)) bad.push(page);
+  }
   return bad.length === 0 || bad.join(', ');
 });
 
 check('every page has title, description and Open Graph tags', () => {
   const bad = [];
   for (const page of PAGES) {
-    const html = read(page); if (!html) continue;
+    const html = read(page); if (!html) { bad.push(`${page}: missing`); continue; }
     for (const [label, re] of [
       ['title', /<title>[^<]{10,}<\/title>/],
       ['description', /<meta[^>]+name=["']description["'][^>]+content=["'][^"']{40,}/],
-      ['og:title', /property=["']og:title["']/],
-      ['og:description', /property=["']og:description["']/],
-      ['og:image', /property=["']og:image["']/],
+      ['og:title', /property=["']og:title["'][^>]*content=["'][^"']+/],
+      ['og:description', /property=["']og:description["'][^>]*content=["'][^"']+/],
+      ['og:image', /property=["']og:image["'][^>]*content=["'][^"']+/],
     ]) if (!re.test(html)) bad.push(`${page}: ${label}`);
   }
   return bad.length === 0 || bad.join('; ');
