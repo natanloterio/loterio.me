@@ -185,10 +185,10 @@ check('every page has title, description and Open Graph tags', () => {
     const html = read(page); if (!html) { bad.push(`${page}: missing`); continue; }
     for (const [label, re] of [
       ['title', /<title>[^<]{10,}<\/title>/],
-      ['description', /<meta[^>]+name=["']description["'][^>]+content=["'][^"']{40,}/],
-      ['og:title', /property=["']og:title["'][^>]*content=["'][^"']+/],
-      ['og:description', /property=["']og:description["'][^>]*content=["'][^"']+/],
-      ['og:image', /property=["']og:image["'][^>]*content=["'][^"']+/],
+      ['description', /<meta[^>]+name=["']description["'][^>]+content=(["'])(?:(?!\1).){40,}/],
+      ['og:title', /property=["']og:title["'][^>]*content=(["'])(?:(?!\1).)+/],
+      ['og:description', /property=["']og:description["'][^>]*content=(["'])(?:(?!\1).)+/],
+      ['og:image', /property=["']og:image["'][^>]*content=(["'])(?:(?!\1).)+/],
     ]) if (!re.test(html)) bad.push(`${page}: ${label}`);
   }
   return bad.length === 0 || bad.join('; ');
