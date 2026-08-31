@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!-- Machine-authored Luxembourgish. Not yet reviewed by a native speaker. -->
+<html lang="lb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Brownie — KI um Apparat op Android · Natan Loterio</title>
+<meta name="description" content="En KI-Agent bauen, deen Tools opruffe kann a komplett op engem Android-Handy leeft: Gemma 4 E2B iwwer LiteRT-LM, Quantiséierung no der RAM vum Apparat gewielt, fënnef Gradle-Moduler, ouni Cloud.">
+<meta property="og:title" content="Brownie — KI um Apparat op Android">
+<meta property="og:description" content="En Agent, deen Tools opruffe kann a mam Späicher vun engem Handy auskënnt. Ouni Cloud, ouni API-Schlëssel an ouni Donnéeën, déi den Apparat verloossen.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/lb/work/brownie.html">
+<link rel="canonical" href="https://loterio.me/lb/work/brownie.html">
+<link rel="alternate" hreflang="en" href="https://loterio.me/work/brownie.html">
+<link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/brownie.html">
+<link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/brownie.html">
+<link rel="alternate" hreflang="x-default" href="https://loterio.me/work/brownie.html">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+
+<nav class="langs" aria-label="Sprooch">
+  <a href="../../work/brownie.html" hreflang="en" lang="en">EN</a>
+  <a href="../../fr/work/brownie.html" hreflang="fr" lang="fr">FR</a>
+  <span aria-current="true">LB</span>
+</nav>
+
+<nav class="case-nav" aria-label="Zréck op d'Startsäit"><a href="../index.html">&larr; Natan Loterio</a></nav>
+
+<main class="case">
+<h1>Brownie — KI um Apparat op Android</h1>
+<p class="meta">Perséinleche Projet · Kotlin, Jetpack Compose, LiteRT-LM · <a href="https://github.com/natanloterio/Brownie" rel="noopener noreferrer">Quellcode op GitHub</a></p>
+
+<h2>Problem</h2>
+<p>All KI-Assistent, dee wierklech eppes ka, ass um Handy en einfache Client. De Modell läit am Rechenzentrum vun engem anere, d'Gespréich reest do hin an zréck, an d'Ganzt hält op ze funktionéieren, wann een am Fliger sëtzt oder hannert der Firewall vun enger Firma ass. De Schutz vun de Donnéeën ass do e Versprieche vun enger Politik an net eng Eegeschaft vum System.</p>
+<p>Ech wollt wëssen, wat wierklech iwwreg bleift, wann een op dat alles verzicht — keng Chatbot-Demo, mee e richtegen Agent, deen Tools oprifft, Fichiere liest a schreift, sech vun enger Sessioun op déi aner erënnert an den Apparat steiert, a komplett op der Hardware leeft, déi een an der Täsch huet.</p>
+
+<h2>Aschränkung</h2>
+<p>En Handy ass kee Server. Et gëtt kee Swap, deen eppes bréngt, de Späicher gëtt mat all anerer App gedeelt, déi leeft, an eng Inferenz, déi laang dauert, stéisst direkt un déi thermesch Limitte vum Apparat. D'Gewiichter vum Modell, d'Tool-Schicht, den Historique vum Gespréich an d'Interface mussen alleguer an dat eranpassen, wat en Android-Apparat aus der Mëttelklass iwwreg huet — an d'Interface muss flësseg bleiwen, während de Modell schafft.</p>
+<p>Déi zweet Aschränkung hunn ech mir selwer opgeluecht, a si war méi schwéier: keng Hëllef aus der Cloud. En hybriden Opbau, deen einfach e Modell aus der Distanz oprifft, wann den Apparat u seng Grenze stéisst, hätt all Demo méi flësseg gemaach an de Grond fir dëse Projet futti gemaach.</p>
+
+<h2>Entscheedungen</h2>
+<ul>
+<li><strong>D'Quantiséierung gëtt zur Lafzäit gewielt, net beim Build.</strong> D'App kuckt beim éischte Start no, wéi vill RAM do ass, a wielt eng Stuf: Q4 mat ongeféier 1,5&nbsp;GB fir Apparater mat 6–8&nbsp;GB, Q4 plus e Vision-Projektor fir 8–12&nbsp;GB, Q8 mat Vision doriwwer. Ënner 6&nbsp;GB seet d'App, datt se net funktionéiert, amplaz lues ze versoen an dem Benotzer d'Schold ze ginn.</li>
+<li><strong>Fënnef Gradle-Moduler amplaz vun engem.</strong> <code>:core:inference</code> ëmschléisst LiteRT-LM, den Download vum Modell an d'Erkennung vum Apparat; <code>:core:agent</code> hält d'Schleef; <code>:core:tools</code> de Registre a seng zwielef Ëmsetzungen; <code>:core:memory</code> d'Persistenz, de Profil an d'Volltextsich an de Sessiounen; <code>:app</code> d'Compose-Interface. Déi Grenz, déi sech gelount huet, ass d'Inferenz — dat ass dat Stéck, dat am sécherste ersat gëtt, wann dee nächste Modell erauskënnt, deen um Apparat leeft.</li>
+<li><strong>De Kontext gëtt zesummegefaasst amplaz ofgeschnidden.</strong> Wann d'Fënster voll ass, mécht den Agent e Resumé a fiert weider. Ofschneide wier en Dag Aarbecht gewiescht; déi éischt Hallschent vun engem Gespréich ze verléiere ass genee dee Feeler, deen d'Benotzer net erkenne kënnen.</li>
+<li><strong>E MCP-Client.</strong> Nei Tools kënnen derbäikommen, andeem een d'App op e Server riicht, ouni datt en APK erausgi muss ginn.</li>
+</ul>
+
+<h2>Resultat</h2>
+<p>120 Kotlin-Fichieren op fënnef Moduler, 200 Commits. Tool-Opruff iwwer méi Ronnen, bis zu zéng Iteratioune pro Message, Äntwerten am Streaming mat Tool-Chips an der Interface, Fichier-Tools an enger Sandbox, Kontakter, Kalenner, Clipboard, autonom Aufgabe mat Zäitplang, d'Liese vum Ecran an d'Automatiséierung vum Apparat iwwer d'Accessibility-APIs, Web-Extraktioun iwwer eng WebView, a Sprooch an all zwou Richtungen.</p>
+<p>Keng Cloud, kee API-Schlëssel, keng Donnéeën, déi den Handy verloossen. Nom eemolegen Download vum Modell lued de Moteur a fënnef bis fofzeng Sekonnen an d'App funktionéiert ouni Netz.</p>
+
+<h2>Wat ech anescht maache géif</h2>
+<p>D'Tool-Schicht ass der App iwwer de Kapp gewuess. <code>:core:tools</code> ass um Enn méi grouss ginn wéi de Modul vun der Interface — véierefofzeg Fichiere géint eenavéierzeg — well all nei Fäegkeet eng weider Ëmsetzung bedeit huet, déi mat an d'App kompiléiert gouf. De MCP-Client, deen ech an der v6 derbäigesat hunn, huet déi richteg Form, an do géif ech ufänken: e klengt agebaute Set fir dat, wat wierklech Zougrëff op de Prozess brauch, an alles anescht hannert engem Tool-Server, dee sech änneren kann, ouni datt en APK erausgi muss ginn. Ech si spéit bei déi Grenz komm; si hätt déi éischt sollte sinn.</p>
+</main>
+
+<footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
+
+</body>
+</html>

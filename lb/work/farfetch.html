@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!-- Machine-authored Luxembourgish. Not yet reviewed by a native speaker. -->
+<html lang="lb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>FARFETCH — eng E-Commerce-App moderniséieren · Natan Loterio</title>
+<meta name="description" content="D'Android-App vu FARFETCH a Produktioun moderniséieren: Jetpack Compose Schrëtt fir Schrëtt agefouert, Dependency Injection, an eng CI-Pipeline vu 15 Minutten op 2,5 erofgesat.">
+<meta property="og:title" content="FARFETCH — eng E-Commerce-App a Produktioun moderniséieren">
+<meta property="og:description" content="Compose an Dependency Injection Schrëtt fir Schrëtt an enger E-Commerce-App a Produktioun, an eng Pipeline vu 15 Minutten op 2,5 erofgesat.">
+<meta property="og:image" content="https://loterio.me/assets/og.png">
+<meta property="og:url" content="https://loterio.me/lb/work/farfetch.html">
+<link rel="canonical" href="https://loterio.me/lb/work/farfetch.html">
+<link rel="alternate" hreflang="en" href="https://loterio.me/work/farfetch.html">
+<link rel="alternate" hreflang="fr" href="https://loterio.me/fr/work/farfetch.html">
+<link rel="alternate" hreflang="lb" href="https://loterio.me/lb/work/farfetch.html">
+<link rel="alternate" hreflang="x-default" href="https://loterio.me/work/farfetch.html">
+<link rel="icon" href="../../assets/favicon.ico" sizes="any">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../assets/site.css">
+</head>
+<body>
+
+<nav class="langs" aria-label="Sprooch">
+  <a href="../../work/farfetch.html" hreflang="en" lang="en">EN</a>
+  <a href="../../fr/work/farfetch.html" hreflang="fr" lang="fr">FR</a>
+  <span aria-current="true">LB</span>
+</nav>
+
+<nav class="case-nav" aria-label="Zréck op d'Startsäit"><a href="../index.html">&larr; Natan Loterio</a></nav>
+
+<main class="case">
+<h1>FARFETCH — eng E-Commerce-App a Produktioun moderniséieren</h1>
+<p class="meta">Android-Ingenieur · August 2021 – Abrëll 2025 · <a href="https://play.google.com/store/apps/details?id=com.farfetch.farfetchshop" rel="noopener noreferrer">FARFETCH op Google Play</a></p>
+
+<h2>Problem</h2>
+<p>FARFETCH ass e Marketplace fir Luxusmode, a seng Android-App hëlt Bestellunge vu Clienten aus der ganzer Welt un. Am Joer 2021 huet de Code Joere vun Entscheedunge mat sech gedroen, déi sech ugesammelt haten: MVC an den eelsten Ecranen, MVVM an deene méi neien, an d'Ofhängegkeeten iwwerall mat der Hand verbonnen. Näischt dovun war falsch, wéi et geschriwwe gouf, a genee dat alles huet all nächst Ännerung méi lues gemaach wéi déi virdrun.</p>
+<p>D'Pipeline vun der kontinuéierlecher Integratioun huet fofzeng Minutte pro Laf gebraucht. Fofzeng Minutten ass iwwer der Grenz, wou d'Ingenieure se net méi lafe loossen a laang waarden, ier se hir Ännerungen zesummen erasetzen — an esou fënnt een d'Integratiounsproblemer spéit an deier.</p>
+
+<h2>Aschränkung</h2>
+<p>Näischt duerft ophalen. D'App war a Produktioun an huet Suen erabruecht, op engem Release-Zuch, dee fir Architektur-Aarbecht net gestoppt huet. All Ännerung huet Schrëtt fir Schrëtt musse landen, an déi al wéi déi nei Patterns hunn am selwechte Code musse weiderliewen, sou laang wéi d'Migratioun gedauert huet — an dat waren Joeren, keng Sprinten.</p>
+
+<h2>Entscheedungen</h2>
+<ul>
+<li><strong>Jetpack Compose Ecran fir Ecran agefouert, hannert der bestehender Navigatioun.</strong> Nei Ecrane goufen a Compose geschriwwen; al Ecrane goufe migréiert, wa se souwisou aus anere Grënn opgemaach goufen. Kee Migratiounssprint, kee Feature-Freeze, a kee Branch, dee sechs Méint laang lieft.</li>
+<li><strong>Ëmkéierung vun der Kontroll iwwer Dependency Injection.</strong> Dat war d'Ännerung, déi de Rescht iwwerhaapt méiglech gemaach huet. D'Konstruktioun vum Verhalen ze trennen ass dat, wat et erlaabt huet, datt en eenzelen Ecran migréiere kann, ouni all seng Ofhängegkeete mat sech ze schleefen.</li>
+<li><strong>Als éischt d'Moduler, dann de Cache — a genee där Reiefolleg.</strong> Eréischt d'Opdeele vum Monolith a Gradle-Moduler huet et méiglech gemaach, de Build iwwerhaapt ze cachen. Mat engem eenzege Modul mécht bal all Ännerung de ganze Build ongëlteg, an e Cache bréngt dann bal näischt; wa mol Grenzen do sinn, beréiert eng Ännerung nach e puer Moduler an de Rescht kënnt aus dem Cache.</li>
+<li><strong>Duerno déi zwee Gradle-Caches, géint zwee verschidde Käschten.</strong> De Build-Cache benotzt d'Resultater vun den Tasken nach eng Kéier, vun engem Build op deen aneren a vun enger Maschinn op déi aner, sou datt d'CI net méi nei berechent, wat en anere Laf schonn produzéiert huet. De Configuration-Cache hëlt d'Konfiguratiounsphas aus de spéidere Leef eraus — dee feste Präis, deen all eenzele Build virdru bezuelt huet, egal wéi wéineg sech geännert hat.</li>
+</ul>
+
+<h2>Resultat</h2>
+<p>D'Pipeline ass am Duerchschnëtt vu 15 Minutten op 2,5 erofgaang — erëm ënner der Grenz, wou d'Ingenieure se bei all Ännerung lafe loossen, amplaz laang ze waarden.</p>
+<p>Compose an Dependency Injection sinn allebéid de Standard fir all nei Aarbecht ginn an net parallel Experimenter. Dat ass dat eenzegt dauerhaft Resultat, dat eng schrëttweis Migratioun ka bréngen: dee neie Wee muss dee liichte Wee sinn, soss gewënnt deen ale Wee duerch d'Gewunnecht.</p>
+
+<h2>Wat ech anescht maache géif</h2>
+<p>Ech géif d'Moduler virun der Migratioun maachen an net zur selwechter Zäit. Mir hunn déi zwou Saache gläichzäiteg gemaach, an dat selwecht Argument, dat ech fir de Build-Cache maachen, gëllt och fir d'Migratioun: et sinn d'Grenzen tëscht de Moduler, déi eng schrëttweis Ännerung bëlleg maachen. Ouni si huet all Ecran, deen op Compose migréiert gouf, nach ëmmer dat ganzt Netz vun Ofhängegkeeten hannert sech hier gezunn, an d'Migratioun huet eng Steier bezuelt, déi net néideg war. D'Aarbecht un der Pipeline huet de Punkt bewisen — ech hunn en nëmmen an der falscher Reiefolleg bewisen.</p>
+</main>
+
+<footer>Natan Loterio · <a href="../index.html">loterio.me</a></footer>
+
+</body>
+</html>

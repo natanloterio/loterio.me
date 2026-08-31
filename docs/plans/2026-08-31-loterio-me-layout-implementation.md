@@ -286,8 +286,21 @@ check('case studies carry all five sections', () => {
   for (const page of CASES) {
     const html = read(page);
     if (!html) { bad.push(`${page}: missing`); continue; }
-    const t = textOf(html);
-    for (const s of CASE_SECTIONS) if (!t.includes(s)) bad.push(`${page}: ${s}`);
+    // Translated pages carry the same five sections under translated headings,
+    // so match on structure, not vocabulary. Listing the French and
+    // Luxembourgish section names here would put unreviewed translation inside
+    // the test suite and make it wrong in a way only a native speaker could see.
+    const n = (html.match(/<h2[\s>]/g) || []).length;
+    if (n !== CASE_SECTIONS.length) {
+      bad.push(`${page}: ${n} sections, expected ${CASE_SECTIONS.length}`);
+      continue;
+    }
+    // The English pages are the source the translations are checked against, so
+    // they are still held to the exact section names.
+    if (!page.includes('/work/')) {
+      const t = textOf(html);
+      for (const s of CASE_SECTIONS) if (!t.includes(s)) bad.push(`${page}: ${s}`);
+    }
   }
   return bad.length === 0 || bad.join('; ');
 });
@@ -324,7 +337,9 @@ check('every case study answers "what I\'d do differently"', () => {
   for (const page of CASES) {
     const html = read(page);
     if (!html) { bad.push(`${page}: missing`); continue; }
-    const tail = html.split(/<h2[^>]*>\s*What I'd do differently\s*<\/h2>/)[1];
+    // The reflection is always the last <h2> section, in every locale.
+    const parts = html.split(/<h2[^>]*>/);
+    const tail = parts.length > 1 ? parts[parts.length - 1].split('</h2>')[1] : undefined;
     if (tail === undefined) { bad.push(`${page}: no heading`); continue; }
     const n = words(textOf(tail.split('</main>')[0]));
     if (n < 20) bad.push(`${page}: ${n} words — author input A1 outstanding`);
