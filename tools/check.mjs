@@ -25,20 +25,69 @@ const textOf = (html) => html
   .replace(/<[^>]+>/g, ' ')
   .replace(/&[a-z]+;/g, ' ');
 const words = (s) => s.split(/\s+/).filter(Boolean).length;
+const analyticsSrc = (page) => `${'../'.repeat(page.split('/').length - 1)}assets/analytics.js`;
 
 for (const page of PAGES) {
   check(`${page} exists`, () => read(page) !== null || 'missing');
 }
 
-check('no executable script tags', () => {
+check('the only executable script on any page is the analytics tag', () => {
   const bad = [];
   for (const page of PAGES) {
     const html = read(page); if (!html) continue;
     for (const tag of html.match(/<script[^>]*>/g) || []) {
-      if (!/type\s*=\s*["']application\/ld\+json["']/.test(tag)) bad.push(`${page}: ${tag}`);
+      if (/type\s*=\s*["']application\/ld\+json["']/.test(tag)) continue;
+      if (tag.includes(`src="${analyticsSrc(page)}"`)) continue;
+      bad.push(`${page}: ${tag}`);
     }
   }
   return bad.length === 0 || bad.join('; ');
+});
+
+check('every page loads the analytics module, deferred, at the right depth', () => {
+  const bad = [];
+  for (const page of PAGES) {
+    const html = read(page);
+    if (!html) { bad.push(`${page}: missing`); continue; }
+    const tag = (html.match(/<script[^>]*>/g) || []).find(t => t.includes('assets/analytics.js'));
+    if (!tag) { bad.push(`${page}: no analytics tag`); continue; }
+    if (!tag.includes(`src="${analyticsSrc(page)}"`)) bad.push(`${page}: wrong path — ${tag}`);
+    if (!/\sdefer[\s>]/.test(tag)) bad.push(`${page}: not deferred`);
+  }
+  return bad.length === 0 || bad.join('; ');
+});
+
+check('analytics denies every storage type before gtag.js is requested', () => {
+  const js = read('assets/analytics.js');
+  if (!js) return 'assets/analytics.js missing';
+  const consent = js.indexOf("'consent', 'default'");
+  const loader = js.indexOf('googletagmanager.com');
+  if (consent === -1) return 'no Consent Mode default block';
+  if (loader === -1) return 'never requests gtag.js';
+  if (consent > loader) return 'consent default is set after gtag.js is requested';
+  for (const key of ['ad_storage', 'ad_user_data', 'ad_personalization', 'analytics_storage']) {
+    const m = js.match(new RegExp(`${key}\\s*:\\s*'([a-z]+)'`));
+    if (!m) return `${key} is not set`;
+    if (m[1] !== 'denied') return `${key} is '${m[1]}', expected 'denied'`;
+  }
+  return true;
+});
+
+check('analytics reports CV downloads, outbound and contact clicks, and page language', () => {
+  const js = read('assets/analytics.js');
+  if (!js) return 'assets/analytics.js missing';
+  const missing = ['cv_download', 'outbound_click', 'contact_click', 'page_language']
+    .filter(e => !js.includes(e));
+  return missing.length === 0 || `missing: ${missing.join(', ')}`;
+});
+
+check('analytics carries a real GA4 measurement ID', () => {
+  const js = read('assets/analytics.js');
+  if (!js) return 'assets/analytics.js missing';
+  const m = js.match(/G-[A-Z0-9]{4,}/);
+  if (!m) return 'no G- measurement ID found';
+  if (/^G-X+$/.test(m[0])) return `still the placeholder ${m[0]} — set the real GA4 ID`;
+  return true;
 });
 
 check('every page under 400 lines', () => {
