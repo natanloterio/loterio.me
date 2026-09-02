@@ -3,6 +3,19 @@
 Status: proposta aprovada em brainstorming, aguardando revisão final.
 Data: 2026-08-31
 
+> **Emenda — 2026-09-02.** A restrição "zero JavaScript" foi levantada
+> deliberadamente para acomodar analytics. O site passou a entregar um único
+> script próprio, `assets/analytics.js` (~2,4KB), que carrega o GA4 via
+> `gtag.js` com Consent Mode v2 negando todo armazenamento — verificado em
+> navegador headless com a biblioteca real do Google carregada: nenhum cookie
+> é escrito, e por isso o site segue sem banner de consentimento.
+>
+> O texto original abaixo fica preservado como registro da decisão de
+> 2026-08-31; os pontos afetados estão marcados com *(emendado)*. O guard em
+> `tools/check.mjs` foi estreitado, não afrouxado: `no executable script tags`
+> virou `the only executable script on any page is the analytics tag`, de modo
+> que qualquer outro script continua reprovando.
+
 ## 1. Objetivo
 
 Transformar loterio.me de cartão de visita em ferramenta de busca de emprego para
@@ -125,6 +138,8 @@ CNAME
 ```
 
 Sem build, sem framework, sem JavaScript. GitHub Pages continua servindo direto.
+*(Emendado em 2026-09-02: um único script, `assets/analytics.js`, passou a ser
+entregue — ver a emenda no topo.)*
 O CSS sai do `<style>` inline porque agora são quatro páginas — duplicar estilo em
 quatro arquivos é o começo da divergência.
 
@@ -268,6 +283,8 @@ celular.
 - Alvos de toque de no mínimo 44px.
 - `prefers-reduced-motion` respeitado (embora quase não haja movimento).
 - Orçamento: menos de 50KB por página sem contar fontes. Zero JavaScript.
+  *(Emendado em 2026-09-02: `assets/analytics.js`, ~2,4KB próprios, mais o
+  `gtag.js` do Google, assíncrono e fora do orçamento de página.)*
 - `preconnect` para o Google Fonts; `display=swap`.
 - Por página: `<title>`, meta description, Open Graph e uma imagem OG.
 - `JSON-LD` com `schema.org/Person` na home — é assim que buscador e algumas
@@ -305,4 +322,6 @@ começar antes.
 6. Página legível com CSS desabilitado.
 7. Impressão em papel sai legível em preto sobre branco.
 8. Nenhum arquivo HTML passa de 400 linhas.
-9. Zero JavaScript entregue.
+9. ~~Zero JavaScript entregue.~~ **Emendado em 2026-09-02:** exatamente um
+   script próprio é entregue (`assets/analytics.js`), e `tools/check.mjs`
+   garante que nenhum outro apareça em nenhuma das doze páginas.

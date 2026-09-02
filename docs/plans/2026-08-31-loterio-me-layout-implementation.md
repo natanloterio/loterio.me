@@ -6,6 +6,15 @@
 
 **Architecture:** Hand-written HTML with one shared stylesheet, served straight from GitHub Pages. No build step, no framework, no JavaScript shipped to the browser. A dependency-free Node script (`tools/check.mjs`) acts as the test suite: it asserts the spec's acceptance criteria against the files on disk, and it is written before the pages exist so the first run is red.
 
+> **Amended 2026-09-02:** the no-JavaScript constraint was lifted to add
+> analytics. The site now ships one first-party script, `assets/analytics.js`
+> (~2.4KB), which loads GA4 through `gtag.js` with Consent Mode v2 denying every
+> storage type before the loader is requested. `tools/check.mjs` was tightened
+> rather than relaxed — `no executable script tags` became `the only executable
+> script on any page is the analytics tag`, joined by four new assertions
+> covering per-depth path and `defer`, consent-before-loader ordering, event
+> coverage, and a non-placeholder measurement ID.
+
 **Tech Stack:** HTML5, CSS3, IBM Plex Mono + IBM Plex Sans (Google Fonts). Dev-only: Node 26 (checker), `npx html-validate` (markup validation), `npx lighthouse` + headless Chrome (accessibility/SEO/best-practices), `python3 -m http.server` (local serving).
 
 **Spec:** `docs/plans/2026-08-31-loterio-me-layout-design.md`
