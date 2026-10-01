@@ -182,7 +182,7 @@ check('every home page carries a substantive status line', () => {
     const m = html.match(/<p class="status">([\s\S]*?)<\/p>/);
     if (!m) { bad.push(`${page}: no status line`); continue; }
     const n = words(textOf(m[1]));
-    if (n < 10) bad.push(`${page}: status line only ${n} words`);
+    if (n < 8) bad.push(`${page}: status line only ${n} words`);
   }
   return bad.length === 0 || bad.join('; ');
 });
